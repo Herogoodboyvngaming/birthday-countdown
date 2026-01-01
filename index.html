@@ -6,9 +6,7 @@
 <title>Countdown Sinh Nhật Nguyễn Chí Dự</title>
 
 <style>
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
     margin: 0;
@@ -17,12 +15,14 @@ body {
     color: white;
     text-align: center;
     background:
-        linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
-        url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee");
+        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+        url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAYAAACD9n5eAAAACXBIWXMAAAsSAAALEgHS3X78AAAgAElEQVR4nO3de3RU9f3/8c8zM8zM7MwMZpQ0hGJQhKQhBSEiJIQhQ0gRCEiCESEgkSEgRCEgQkSEgQ0hIRKQQhISEQkSEgRCEgQkSEgQ0hIRKQQhISEQkSEgRCEgQkSEgQ0hIRKQQhISEQkSEgRCEgQkSEgQ0hIRKQQhISEQkSEgRCEgQkSEgQ0hIRKQQhISEQkSEgRCEgQkSEgQ0hIRKQQhISEQkSEgRCEgQkSEgQ0hIRKQQhISEQkSEgRCEgQkSEgQ0hIRKQQhISEQkSEgRCEgQkSEgQ0hIRKQQhISEQkSEgRCEgQkSEgQ0hIRKQQhISEQkSEgRCEgQkSEgQ0hIRKQY7f0Dk3k6f9yAAAAAElFTkSuQmCC");
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
 }
 
+/* Khung nội dung */
 .container {
     position: relative;
     z-index: 2;
@@ -58,7 +58,7 @@ h1 {
 
 @keyframes glow {
     from { text-shadow: 0 0 10px #ffeb3b; }
-    to { text-shadow: 0 0 30px #ff5722; }
+    to   { text-shadow: 0 0 30px #ff5722; }
 }
 
 .note {
@@ -66,6 +66,7 @@ h1 {
     opacity: 0.9;
 }
 
+/* Canvas pháo hoa */
 canvas {
     position: fixed;
     top: 0;
@@ -87,54 +88,57 @@ canvas {
     </h1>
 
     <div id="countdown">Đang tải...</div>
-
-    <div id="birthday">
-        🎉 CHÚC MỪNG SINH NHẬT 🎂
-    </div>
-
-    <div class="note">
-        👉 Chạm màn hình để bật nhạc 🎶
-    </div>
+    <div id="birthday">🎉 CHÚC MỪNG SINH NHẬT 🎂</div>
+    <div class="note">👉 Chạm màn hình để bật nhạc 🎶</div>
 </div>
 
-<audio id="music" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3">
-</audio>
+<!-- YouTube Player ẩn -->
+<div id="player" style="display:none;"></div>
 
 <script>
-/* ===== MUSIC ===== */
-const music = document.getElementById("music");
+/* ===== YOUTUBE MUSIC ===== */
+let player;
 let musicPlayed = false;
 
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+        videoId: 'Wu8NeFXaoOc',
+        playerVars: { autoplay: 0, loop: 1, playlist: 'Wu8NeFXaoOc' }
+    });
+}
+
 function playMusic() {
-    if (!musicPlayed) {
-        music.play();
+    if (player && !musicPlayed) {
+        player.playVideo();
         musicPlayed = true;
     }
 }
 
+const tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+document.body.appendChild(tag);
+
 /* ===== COUNTDOWN ===== */
 function updateCountdown() {
     const now = new Date();
-    let year = now.getFullYear();
-    let birthday = new Date(year, 1, 26);
+    let y = now.getFullYear();
+    let bd = new Date(y, 1, 26);
+    if (now > bd) bd = new Date(y + 1, 1, 26);
 
-    if (now > birthday) birthday = new Date(year + 1, 1, 26);
-
-    const diff = birthday - now;
+    const diff = bd - now;
 
     if (diff <= 0) {
         document.getElementById("countdown").style.display = "none";
         document.getElementById("birthday").style.display = "block";
-        startFireworks();
-        music.play();
+        fireworksActive = true;
+        playMusic();
         return;
     }
 
-    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const m = Math.floor((diff / (1000 * 60)) % 60);
-    const s = Math.floor((diff / 1000) % 60);
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor(diff / 3600000) % 24;
+    const m = Math.floor(diff / 60000) % 60;
+    const s = Math.floor(diff / 1000) % 60;
 
     document.getElementById("countdown").innerHTML =
         `${d} ngày<br>${h} giờ ${m} phút ${s} giây`;
@@ -146,65 +150,39 @@ updateCountdown();
 /* ===== FIREWORKS ===== */
 const canvas = document.getElementById("fireworks");
 const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+function resize(){ canvas.width=innerWidth; canvas.height=innerHeight; }
+resize(); onresize=resize;
 
-window.onresize = () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-};
+let particles=[], fireworksActive=false;
+function rand(a,b){ return Math.random()*(b-a)+a; }
 
-let particles = [];
-let fireworksActive = false;
-
-function random(min, max) {
-    return Math.random() * (max - min) + min;
-}
-
-function createFirework() {
-    const x = random(0, canvas.width);
-    const y = random(0, canvas.height / 2);
-    const count = 80;
-
-    for (let i = 0; i < count; i++) {
+function createFirework(){
+    const x=rand(0,canvas.width), y=rand(0,canvas.height/2);
+    for(let i=0;i<80;i++){
         particles.push({
-            x, y,
-            vx: Math.cos(i) * random(1, 5),
-            vy: Math.sin(i) * random(1, 5),
-            life: 100,
-            color: `hsl(${random(0,360)},100%,60%)`
+            x,y,
+            vx:Math.cos(i)*rand(1,5),
+            vy:Math.sin(i)*rand(1,5),
+            life:100,
+            color:`hsl(${rand(0,360)},100%,60%)`
         });
     }
 }
 
-function updateFireworks() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    particles.forEach((p, i) => {
-        p.x += p.vx;
-        p.y += p.vy;
-        p.life--;
-
+function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach((p,i)=>{
+        p.x+=p.vx; p.y+=p.vy; p.life--;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
+        ctx.arc(p.x,p.y,2,0,Math.PI*2);
+        ctx.fillStyle=p.color;
         ctx.fill();
-
-        if (p.life <= 0) particles.splice(i, 1);
+        if(p.life<=0) particles.splice(i,1);
     });
-
-    if (fireworksActive && Math.random() < 0.05) {
-        createFirework();
-    }
-
-    requestAnimationFrame(updateFireworks);
+    if(fireworksActive && Math.random()<0.05) createFirework();
+    requestAnimationFrame(animate);
 }
-
-function startFireworks() {
-    fireworksActive = true;
-}
-
-updateFireworks();
+animate();
 </script>
 
 </body>
