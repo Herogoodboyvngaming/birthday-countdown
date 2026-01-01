@@ -1,209 +1,126 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Birthday Countdown</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Sinh Nhật Nguyễn Chí Dự</title>
 
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-}
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: black;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+            overflow: hidden;
+        }
 
-body {
-    min-height: 100vh;
-    background: #0f0f0f;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    overflow: hidden;
-}
+        h1 {
+            margin-top: 40px;
+        }
 
-.card {
-    width: 92%;
-    max-width: 420px;
-    background: rgba(0,0,0,0.7);
-    border-radius: 18px;
-    padding: 22px;
-    text-align: center;
-    box-shadow: 0 0 35px rgba(0,0,0,0.8);
-    z-index: 2;
-}
+        #subtitle {
+            margin-top: 10px;
+            font-size: 18px;
+        }
 
-h1 {
-    font-size: 20px;
-    margin-bottom: 6px;
-}
+        #countdown {
+            margin: 20px auto;
+            font-size: 26px;
+            font-weight: bold;
+            background: white;
+            color: white;
+            padding: 14px;
+            border-radius: 14px;
+            width: fit-content;
+            text-shadow: 0 0 6px black;
+            box-shadow: 0 0 20px rgba(255,255,255,0.6);
+        }
 
-.subtitle {
-    font-size: 14px;
-    opacity: 0.85;
-    margin-bottom: 14px;
-}
-
-/* ✅ BẢNG ĐẾM: NỀN TRẮNG + CHỮ TRẮNG */
-#countdown {
-    font-size: 26px;
-    font-weight: bold;
-    margin: 16px 0;
-
-    background: #ffffff;
-    color: #ffffff;
-    padding: 12px 10px;
-    border-radius: 14px;
-
-    text-shadow:
-        0 0 4px #000,
-        0 0 8px rgba(0,0,0,0.6);
-
-    box-shadow: 0 0 18px rgba(255,255,255,0.7);
-}
-
-#birthday {
-    display: none;
-    font-size: 30px;
-    font-weight: 800;
-    color: #ffeb3b;
-    animation: glow 0.9s infinite alternate;
-}
-
-@keyframes glow {
-    from { text-shadow: 0 0 10px #ffeb3b; }
-    to { text-shadow: 0 0 30px #ff5722; }
-}
-
-.spotify {
-    margin-top: 12px;
-}
-
-canvas {
-    position: fixed;
-    inset: 0;
-    z-index: 1;
-}
-</style>
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+    </style>
 </head>
 
 <body>
 
-<canvas id="fireworks"></canvas>
+    <h1>🎉 COUNTDOWN TỚI SINH NHẬT CỦA NGUYỄN CHÍ DỰ 🎉</h1>
+    <div id="subtitle">🎂 CÙNG ĐỢI TỚI NGÀY SINH NHẬT CÙNG MÌNH NHÉ MỌI NGƯỜI 🎂</div>
 
-<div class="card">
-    <h1>
-        COUNTDOWN SINH NHẬT<br>
-        NGUYỄN CHÍ DỰ<br>
-        🎂 26 / 02 / 2009 🎂
-    </h1>
+    <div id="countdown">Đang tải...</div>
 
-    <div class="subtitle">
-        🎂 CÙNG ĐỢI TỚI NGÀY SINH NHẬT CÙNG MÌNH NHÉ MỌI NGƯỜI 🎂
-    </div>
+    <!-- Nhạc Spotify -->
+    <iframe style="border-radius:12px"
+        src="https://open.spotify.com/embed/track/7hSQZhitTMcUVTKw1Zjx42"
+        width="300"
+        height="80"
+        frameBorder="0"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+    </iframe>
 
-    <div id="countdown">Đang tính...</div>
-    <div id="birthday">🎉 CHÚC MỪNG SINH NHẬT 🎉</div>
+    <canvas id="fireworks"></canvas>
 
-    <div class="spotify">
-        <iframe style="border-radius:12px"
-            src="https://open.spotify.com/embed/track/7hSQZhitTMcUVTKw1Zjx42"
-            width="100%" height="80"
-            frameborder="0"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
-        </iframe>
-    </div>
-</div>
+    <script>
+        /* ================== COUNTDOWN ================== */
+        // 👉 CHỈ CHỈNH DUY NHẤT THỜI GIAN Ở ĐÂY
+        const birthday = new Date("2026-02-26T20:00:00+07:00").getTime();
 
-<script>
-/* ===== COUNTDOWN (AUTO MỖI NĂM) ===== */
-const countdownEl = document.getElementById("countdown");
-const birthdayEl = document.getElementById("birthday");
+        const timer = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = birthday - now;
 
-function updateCountdown() {
-    const now = new Date();
-    let year = now.getFullYear();
-    let birthday = new Date(year, 1, 26, 0, 0, 0);
+            if (distance <= 0) {
+                clearInterval(timer);
+                document.getElementById("countdown").innerHTML =
+                    "🎉🎂 CHÚC MỪNG SINH NHẬT NGUYỄN CHÍ DỰ 🎂🎉";
+                startFireworks();
+                return;
+            }
 
-    if (now > birthday) {
-        birthday = new Date(year + 1, 1, 26, 0, 0, 0);
-    }
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    const diff = birthday - now;
+            document.getElementById("countdown").innerHTML =
+                `${days} ngày ${hours} giờ ${minutes} phút ${seconds} giây`;
+        }, 1000);
 
-    if (diff <= 0) {
-        countdownEl.style.display = "none";
-        birthdayEl.style.display = "block";
-        fireworksEnabled = true;
-        return;
-    }
+        /* ================== FIREWORKS ================== */
+        const canvas = document.getElementById("fireworks");
+        const ctx = canvas.getContext("2d");
 
-    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const m = Math.floor((diff / (1000 * 60)) % 60);
-    const s = Math.floor((diff / 1000) % 60);
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-    countdownEl.innerHTML = `${d} ngày<br>${h} giờ ${m} phút ${s} giây`;
-}
+        function random(min, max) {
+            return Math.random() * (max - min) + min;
+        }
 
-setInterval(updateCountdown, 1000);
-updateCountdown();
+        function startFireworks() {
+            setInterval(() => {
+                const x = random(0, canvas.width);
+                const y = random(0, canvas.height / 2);
+                const r = random(50, 120);
 
-/* ===== FIREWORKS ===== */
-const canvas = document.getElementById("fireworks");
-const ctx = canvas.getContext("2d");
+                ctx.beginPath();
+                ctx.arc(x, y, r, 0, Math.PI * 2);
+                ctx.strokeStyle = `hsl(${random(0,360)},100%,60%)`;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }, 200);
+        }
 
-function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
-resize();
-window.addEventListener("resize", resize);
-
-let particles = [];
-let fireworksEnabled = false;
-
-function firework() {
-    const x = Math.random() * canvas.width;
-    const y = Math.random() * canvas.height * 0.5;
-
-    for (let i = 0; i < 60; i++) {
-        particles.push({
-            x,
-            y,
-            vx: Math.cos(i) * Math.random() * 3,
-            vy: Math.sin(i) * Math.random() * 3,
-            life: 80,
-            color: `hsl(${Math.random()*360},100%,60%)`
-        });
-    }
-}
-
-function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    particles.forEach((p, i) => {
-        p.x += p.vx;
-        p.y += p.vy;
-        p.life--;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.fill();
-
-        if (p.life <= 0) particles.splice(i, 1);
-    });
-
-    if (fireworksEnabled && Math.random() < 0.06) {
-        firework();
-    }
-
-    requestAnimationFrame(animate);
-}
-animate();
-</script>
+        window.onresize = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        };
+    </script>
 
 </body>
 </html>
