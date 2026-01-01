@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Countdown Sinh Nhật Nguyễn Chí Dự</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    text-align: center;
+    background:
+        linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+        url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee");
+    background-size: cover;
+    background-position: center;
+}
+
+.container {
+    position: relative;
+    z-index: 2;
+    width: 90%;
+    max-width: 420px;
+    margin: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.55);
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.8);
+}
+
+h1 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+#countdown {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+#birthday {
+    display: none;
+    font-size: 30px;
+    font-weight: bold;
+    color: #ffeb3b;
+    animation: glow 0.8s infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px #ffeb3b; }
+    to { text-shadow: 0 0 30px #ff5722; }
+}
+
+.note {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+</style>
+</head>
+
+<body onclick="playMusic()">
+
+<canvas id="fireworks"></canvas>
+
+<div class="container">
+    <h1>
+        COUNTDOWN TỚI SINH NHẬT CỦA<br>
+        NGUYỄN CHÍ DỰ<br>
+        (26/02/2009)
+    </h1>
+
+    <div id="countdown">Đang tải...</div>
+
+    <div id="birthday">
+        🎉 CHÚC MỪNG SINH NHẬT 🎂
+    </div>
+
+    <div class="note">
+        👉 Chạm màn hình để bật nhạc 🎶
+    </div>
+</div>
+
+<audio id="music" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3">
+</audio>
+
+<script>
+/* ===== MUSIC ===== */
+const music = document.getElementById("music");
+let musicPlayed = false;
+
+function playMusic() {
+    if (!musicPlayed) {
+        music.play();
+        musicPlayed = true;
+    }
+}
+
+/* ===== COUNTDOWN ===== */
+function updateCountdown() {
+    const now = new Date();
+    let year = now.getFullYear();
+    let birthday = new Date(year, 1, 26);
+
+    if (now > birthday) birthday = new Date(year + 1, 1, 26);
+
+    const diff = birthday - now;
+
+    if (diff <= 0) {
+        document.getElementById("countdown").style.display = "none";
+        document.getElementById("birthday").style.display = "block";
+        startFireworks();
+        music.play();
+        return;
+    }
+
+    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const m = Math.floor((diff / (1000 * 60)) % 60);
+    const s = Math.floor((diff / 1000) % 60);
+
+    document.getElementById("countdown").innerHTML =
+        `${d} ngày<br>${h} giờ ${m} phút ${s} giây`;
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+/* ===== FIREWORKS ===== */
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+window.onresize = () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+};
+
+let particles = [];
+let fireworksActive = false;
+
+function random(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+function createFirework() {
+    const x = random(0, canvas.width);
+    const y = random(0, canvas.height / 2);
+    const count = 80;
+
+    for (let i = 0; i < count; i++) {
+        particles.push({
+            x, y,
+            vx: Math.cos(i) * random(1, 5),
+            vy: Math.sin(i) * random(1, 5),
+            life: 100,
+            color: `hsl(${random(0,360)},100%,60%)`
+        });
+    }
+}
+
+function updateFireworks() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach((p, i) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life--;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+
+        if (p.life <= 0) particles.splice(i, 1);
+    });
+
+    if (fireworksActive && Math.random() < 0.05) {
+        createFirework();
+    }
+
+    requestAnimationFrame(updateFireworks);
+}
+
+function startFireworks() {
+    fireworksActive = true;
+}
+
+updateFireworks();
+</script>
+
+</body>
+</html>
