@@ -15,12 +15,7 @@
 
 body {
     min-height: 100vh;
-    background:
-        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-        url("https://images.unsplash.com/photo-1549417229-3d5b8f2f5a0d");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background: #0f0f0f;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -32,7 +27,7 @@ body {
 .card {
     width: 92%;
     max-width: 420px;
-    background: rgba(0,0,0,0.65);
+    background: rgba(0,0,0,0.7);
     border-radius: 18px;
     padding: 22px;
     text-align: center;
@@ -42,7 +37,14 @@ body {
 
 h1 {
     font-size: 20px;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
+}
+
+/* SUBTITLE */
+.subtitle {
+    font-size: 14px;
+    opacity: 0.85;
+    margin-bottom: 14px;
 }
 
 #countdown {
@@ -89,6 +91,11 @@ canvas {
         🎂 26 / 02 / 2009 🎂
     </h1>
 
+    <!-- ✅ SUBTITLE -->
+    <div class="subtitle">
+        🎂 CÙNG ĐỢI TỚI NGÀY SINH NHẬT CÙNG MÌNH NHÉ MỌI NGƯỜI 🎂
+    </div>
+
     <div id="countdown">Đang tính...</div>
     <div id="birthday">🎉 CHÚC MỪNG SINH NHẬT 🎉</div>
 
@@ -104,21 +111,20 @@ canvas {
 </div>
 
 <script>
-/* ===== COUNTDOWN FIX ===== */
+/* ===== COUNTDOWN ===== */
 const countdownEl = document.getElementById("countdown");
 const birthdayEl = document.getElementById("birthday");
 
 function updateCountdown() {
     const now = new Date();
-
-    let targetYear = now.getFullYear();
-    let birthday = new Date(targetYear, 1, 26, 0, 0, 0);
+    let year = now.getFullYear();
+    let birthday = new Date(year, 1, 26, 0, 0, 0);
 
     if (now > birthday) {
-        birthday = new Date(targetYear + 1, 1, 26, 0, 0, 0);
+        birthday = new Date(year + 1, 1, 26, 0, 0, 0);
     }
 
-    const diff = birthday.getTime() - now.getTime();
+    const diff = birthday - now;
 
     if (diff <= 0) {
         countdownEl.style.display = "none";
@@ -127,13 +133,12 @@ function updateCountdown() {
         return;
     }
 
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((diff / (1000 * 60)) % 60);
-    const seconds = Math.floor((diff / 1000) % 60);
+    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const m = Math.floor((diff / (1000 * 60)) % 60);
+    const s = Math.floor((diff / 1000) % 60);
 
-    countdownEl.innerHTML =
-        `${days} ngày<br>${hours} giờ ${minutes} phút ${seconds} giây`;
+    countdownEl.innerHTML = `${d} ngày<br>${h} giờ ${m} phút ${s} giây`;
 }
 
 setInterval(updateCountdown, 1000);
