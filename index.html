@@ -23,7 +23,6 @@ body {
     overflow: hidden;
 }
 
-/* Khung chính */
 .card {
     width: 92%;
     max-width: 420px;
@@ -40,17 +39,28 @@ h1 {
     margin-bottom: 6px;
 }
 
-/* SUBTITLE */
 .subtitle {
     font-size: 14px;
     opacity: 0.85;
     margin-bottom: 14px;
 }
 
+/* ✅ BẢNG ĐẾM: NỀN TRẮNG + CHỮ TRẮNG */
 #countdown {
     font-size: 26px;
     font-weight: bold;
     margin: 16px 0;
+
+    background: #ffffff;
+    color: #ffffff;
+    padding: 12px 10px;
+    border-radius: 14px;
+
+    text-shadow:
+        0 0 4px #000,
+        0 0 8px rgba(0,0,0,0.6);
+
+    box-shadow: 0 0 18px rgba(255,255,255,0.7);
 }
 
 #birthday {
@@ -66,12 +76,10 @@ h1 {
     to { text-shadow: 0 0 30px #ff5722; }
 }
 
-/* Spotify */
 .spotify {
     margin-top: 12px;
 }
 
-/* Canvas pháo hoa */
 canvas {
     position: fixed;
     inset: 0;
@@ -91,7 +99,6 @@ canvas {
         🎂 26 / 02 / 2009 🎂
     </h1>
 
-    <!-- ✅ SUBTITLE -->
     <div class="subtitle">
         🎂 CÙNG ĐỢI TỚI NGÀY SINH NHẬT CÙNG MÌNH NHÉ MỌI NGƯỜI 🎂
     </div>
@@ -99,7 +106,6 @@ canvas {
     <div id="countdown">Đang tính...</div>
     <div id="birthday">🎉 CHÚC MỪNG SINH NHẬT 🎉</div>
 
-    <!-- Spotify giữ nguyên -->
     <div class="spotify">
         <iframe style="border-radius:12px"
             src="https://open.spotify.com/embed/track/7hSQZhitTMcUVTKw1Zjx42"
@@ -111,7 +117,7 @@ canvas {
 </div>
 
 <script>
-/* ===== COUNTDOWN ===== */
+/* ===== COUNTDOWN (AUTO MỖI NĂM) ===== */
 const countdownEl = document.getElementById("countdown");
 const birthdayEl = document.getElementById("birthday");
 
