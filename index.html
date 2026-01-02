@@ -3,124 +3,286 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Countdown Sinh Nhật Nguyễn Chí Dự</title>
-
+    <title>⏰ 🎉 Countdown Sinh Nhật Nguyễn Chí Dự 🎂 🥳</title>
+    <meta name="description" content="Countdown siêu đẹp đến 20:00 ngày 26/02 - Sinh nhật Nguyễn Chí Dự!">
+    
+    <!-- Tối ưu load GIF pháo hoa -->
+    <link rel="preload" href="https://i.pinimg.com/originals/76/b5/82/76b58298e9cee7c935f9ec9ba1433508.gif" as="image">
+    <link rel="preload" href="https://i.pinimg.com/originals/7a/f2/ef/7af2ef0b0b2294982218b48d4a1f488b.gif" as="image">
+    
     <style>
+        * { box-sizing: border-box; }
         body {
             margin: 0;
             padding: 0;
-            background: black;
-            color: white;
-            font-family: Arial, Helvetica, sans-serif;
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            color: #fff;
             text-align: center;
             overflow: hidden;
+            position: relative;
+            background: radial-gradient(circle at center, #000428, #000);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .night-sky {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 30%, #001133 0%, #000000 70%);
+            z-index: -2;
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            padding: 30px;
+            border-radius: 20px;
+            background: rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+            max-width: 95%;
+            width: 900px;
+            transition: transform 0.8s ease;
+        }
+
+        .emoji {
+            font-size: 4.5em;
+            margin: 15px 0;
+            animation: float 5s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-25px); }
         }
 
         h1 {
-            margin-top: 40px;
+            font-size: 3.8em;
+            color: #ffd700;
+            text-shadow: 0 0 20px #ff69b4, 0 0 40px #ff1493;
+            margin: 10px 0;
+            animation: glow 3s infinite alternate;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 0 20px #ff69b4, 0 0 40px #ff1493; }
+            to { text-shadow: 0 0 30px #ffd700, 0 0 50px #ff69b4; }
         }
 
-        #subtitle {
-            margin-top: 10px;
-            font-size: 18px;
+        /* Subtitle được trang trí đẹp lung linh */
+        .subtitle {
+            font-size: 2.4em;
+            font-weight: bold;
+            color: #ff69b4;
+            text-shadow: 
+                0 0 10px #ffd700,
+                0 0 20px #ff1493,
+                0 0 30px #ff69b4,
+                2px 2px 15px rgba(0,0,0,0.8);
+            margin: 40px 0 50px;
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(8px);
+            display: inline-block;
+            border: 2px dashed #ffd700;
+            animation: 
+                subtlePulse 4s infinite,
+                rainbowGlow 8s linear infinite;
+        }
+
+        @keyframes subtlePulse {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+
+        @keyframes rainbowGlow {
+            0%   { box-shadow: 0 0 20px #ff0000; }
+            16%  { box-shadow: 0 0 20px #ff9900; }
+            33%  { box-shadow: 0 0 20px #ffff00; }
+            50%  { box-shadow: 0 0 20px #00ff00; }
+            66%  { box-shadow: 0 0 20px #00ffff; }
+            83%  { box-shadow: 0 0 20px #ff00ff; }
+            100% { box-shadow: 0 0 20px #ff0000; }
         }
 
         #countdown {
-            margin: 20px auto;
-            font-size: 26px;
-            font-weight: bold;
-            background: white;
-            color: white;
-            padding: 14px;
-            border-radius: 14px;
-            width: fit-content;
-            text-shadow: 0 0 6px black;
-            box-shadow: 0 0 20px rgba(255,255,255,0.6);
+            font-size: 5em;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin: 40px 0;
+            opacity: 1;
+            transition: opacity 1.2s ease-out;
         }
 
-        canvas {
+        .unit {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 25px 40px;
+            border-radius: 20px;
+            min-width: 140px;
+            backdrop-filter: blur(8px);
+            border: 3px solid #ff69b4;
+            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
+        }
+
+        .number {
+            display: block;
+            font-weight: bold;
+            color: #ff69b4;
+            text-shadow: 0 0 25px #ffd700;
+        }
+
+        .label {
+            font-size: 0.32em;
+            text-transform: uppercase;
+            color: #ffd700;
+            margin-top: 12px;
+            letter-spacing: 2px;
+        }
+
+        #happyBirthday {
+            font-size: 5em;
+            color: #ffd700;
+            text-shadow: 0 0 50px #ff69b4, 0 0 80px #ff1493;
+            display: none;
+            opacity: 0;
+            animation: celebratePulse 2s infinite;
+            margin: 40px 0;
+            line-height: 1.4;
+        }
+        @keyframes celebratePulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+
+        .fireworks-container {
             position: fixed;
-            top: 0;
-            left: 0;
+            inset: 0;
             pointer-events: none;
+            z-index: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1.8s ease-in;
+            will-change: opacity;
+        }
+        .fireworks-container.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .fireworks-container img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            will-change: transform;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.8em; }
+            .subtitle { font-size: 1.8em; padding: 10px 20px; }
+            #countdown { font-size: 3.5em; gap: 15px; }
+            .unit { padding: 20px 25px; min-width: 100px; }
+            #happyBirthday { font-size: 3.5em; }
+            .emoji { font-size: 3.5em; }
         }
     </style>
 </head>
-
 <body>
+    <div class="night-sky"></div>
+    <div class="overlay"></div>
 
-    <h1>🎉 COUNTDOWN TỚI SINH NHẬT CỦA NGUYỄN CHÍ DỰ 🎉</h1>
-    <div id="subtitle">🎂 CÙNG ĐỢI TỚI NGÀY SINH NHẬT CÙNG MÌNH NHÉ MỌI NGƯỜI 🎂</div>
+    <div class="fireworks-container" id="fireworksContainer">
+        <img src="https://i.pinimg.com/originals/76/b5/82/76b58298e9cee7c935f9ec9ba1433508.gif" alt="Pháo hoa 1">
+        <img src="https://i.pinimg.com/originals/7a/f2/ef/7af2ef0b0b2294982218b48d4a1f488b.gif" alt="Pháo hoa 2">
+        <img src="https://media.tenor.com/ZYSYsmBaqHMAAAAM/fireworks-firework.gif" alt="Pháo hoa 3">
+        <img src="https://i.gifer.com/7J8Z.gif" alt="Pháo hoa 4">
+    </div>
 
-    <div id="countdown">Đang tải...</div>
-
-    <!-- Nhạc Spotify -->
-    <iframe style="border-radius:12px"
-        src="https://open.spotify.com/embed/track/7hSQZhitTMcUVTKw1Zjx42"
-        width="300"
-        height="80"
-        frameBorder="0"
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
-    </iframe>
-
-    <canvas id="fireworks"></canvas>
+    <div class="content">
+        <div class="emoji">🎉🥳🎂</div>
+        <h1>⏰ COUNTDOWN TỚI SINH NHẬT <br>NGUYỄN CHÍ DỰ 🎂</h1>
+        
+        <p class="subtitle">🎈 CÙNG ĐỢI TỚI NGÀY SINH NHẬT TUI NHÉ MỌI NGƯỜI 🎈</p>
+        
+        <div id="countdown">
+            <div class="unit"><span class="number" id="days">00</span><div class="label">Ngày</div></div>
+            <div class="unit"><span class="number" id="hours">00</span><div class="label">Giờ</div></div>
+            <div class="unit"><span class="number" id="minutes">00</span><div class="label">Phút</div></div>
+            <div class="unit"><span class="number" id="seconds">00</span><div class="label">Giây</div></div>
+        </div>
+        
+        <p id="happyBirthday">
+            🎉🎆🥳<br>
+            CHÚC MỪNG SINH NHẬT<br>
+            NGUYỄN CHÍ DỰ!<br>
+            🎂🎈🎆
+        </p>
+        
+        <div class="emoji">🎁🍰🎈</div>
+    </div>
 
     <script>
-        /* ================== COUNTDOWN ================== */
-        // 👉 CHỈ CHỈNH DUY NHẤT THỜI GIAN Ở ĐÂY
-        const birthday = new Date("2026-02-26T20:00:00+07:00").getTime();
+        // Sinh nhật: 26/02 lúc đúng 20:00:00 năm tới
+        const birthday = new Date();
+        const now = new Date();
+        const currentMonth = now.getMonth();
+        const currentDay = now.getDate();
+        const currentHour = now.getHours();
 
-        const timer = setInterval(() => {
+        if (currentMonth > 1 || (currentMonth === 1 && (currentDay > 26 || (currentDay === 26 && currentHour >= 20)))) {
+            birthday.setFullYear(now.getFullYear() + 1);
+        } else {
+            birthday.setFullYear(now.getFullYear());
+        }
+        birthday.setMonth(1); // Tháng 2
+        birthday.setDate(26);
+        birthday.setHours(20, 0, 0, 0);
+
+        const countdownEl = document.getElementById('countdown');
+        const happyEl = document.getElementById('happyBirthday');
+        const fireworksEl = document.getElementById('fireworksContainer');
+
+        function updateCountdown() {
             const now = new Date().getTime();
-            const distance = birthday - now;
+            const diff = birthday.getTime() - now;
 
-            if (distance <= 0) {
-                clearInterval(timer);
-                document.getElementById("countdown").innerHTML =
-                    "🎉🎂 CHÚC MỪNG SINH NHẬT NGUYỄN CHÍ DỰ 🎂🎉";
-                startFireworks();
+            if (diff <= 0) {
+                countdownEl.style.opacity = '0';
+                setTimeout(() => {
+                    countdownEl.style.display = 'none';
+                    happyEl.style.display = 'block';
+                    happyEl.style.opacity = '1';
+                    fireworksEl.classList.add('active');
+                }, 1200);
                 return;
             }
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-            document.getElementById("countdown").innerHTML =
-                `${days} ngày ${hours} giờ ${minutes} phút ${seconds} giây`;
-        }, 1000);
-
-        /* ================== FIREWORKS ================== */
-        const canvas = document.getElementById("fireworks");
-        const ctx = canvas.getContext("2d");
-
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        function random(min, max) {
-            return Math.random() * (max - min) + min;
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
         }
 
-        function startFireworks() {
-            setInterval(() => {
-                const x = random(0, canvas.width);
-                const y = random(0, canvas.height / 2);
-                const r = random(50, 120);
-
-                ctx.beginPath();
-                ctx.arc(x, y, r, 0, Math.PI * 2);
-                ctx.strokeStyle = `hsl(${random(0,360)},100%,60%)`;
-                ctx.lineWidth = 2;
-                ctx.stroke();
-            }, 200);
-        }
-
-        window.onresize = () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        };
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
     </script>
-
 </body>
 </html>
