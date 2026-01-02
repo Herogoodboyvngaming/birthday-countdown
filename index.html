@@ -21,37 +21,25 @@
             text-align: center;
             overflow: hidden;
             position: relative;
-            background: linear-gradient(to bottom, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb);
+            background: #000; /* Nền đen tạm để overlay mờ làm chữ nổi */
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
         }
 
-        /* Background sinh nhật siêu đẹp: bóng bay, confetti nhẹ + gradient màu pastel */
+        /* Background mới: ảnh tĩnh có bánh kem + chữ Happy Birthday */
         .birthday-bg {
             position: absolute;
             inset: 0;
-            background: 
-                url('https://i.pinimg.com/originals/1b/1c/4b/1b1c4b3f5e5e5e5e5e5e5e5e5e5e5e5e.gif') center/cover no-repeat, /* confetti nhẹ */
-                url('https://i.gifer.com/embedded/download/7J8Y.gif') center/cover no-repeat, /* bóng bay bay lên */
-                linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #ff9a9e 100%);
-            background-blend-mode: screen;
-            opacity: 0.85;
+            background: url('https://static.vecteezy.com/system/resources/previews/057/501/943/large_2x/happy-birthday-cake-with-colorful-confetti-and-balloons-on-pink-background-photo.jpeg') center center / cover no-repeat;
             z-index: -2;
-            animation: bgAnimate 30s ease infinite;
-        }
-
-        @keyframes bgAnimate {
-            0% { background-position: 50% 50%, 50% 100%, 0% 0%; }
-            50% { background-position: 50% 50%, 50% 0%, 100% 100%; }
-            100% { background-position: 50% 50%, 50% 100%, 0% 0%; }
         }
 
         .overlay {
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.35);
+            background: rgba(0, 0, 0, 0.45); /* Mờ hơn một chút để chữ countdown và tiêu đề nổi bật rõ ràng */
             z-index: 1;
             pointer-events: none;
         }
@@ -69,6 +57,7 @@
             width: 900px;
         }
 
+        /* Các style còn lại giữ nguyên 100% */
         .emoji {
             font-size: 4.5em;
             margin: 15px 0;
@@ -272,7 +261,7 @@
     </style>
 </head>
 <body>
-    <!-- Background sinh nhật mới siêu đẹp -->
+    <!-- Background mới: ảnh tĩnh đẹp có bánh kem, confetti, bóng bay và nền hồng sinh nhật -->
     <div class="birthday-bg"></div>
     
     <div class="overlay"></div>
