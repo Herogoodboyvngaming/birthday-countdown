@@ -25,6 +25,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            cursor: pointer; /* Gợi ý có thể click */
         }
 
         .night-sky {
@@ -53,7 +54,6 @@
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
             max-width: 95%;
             width: 900px;
-            transition: transform 0.8s ease;
         }
 
         .emoji {
@@ -78,7 +78,6 @@
             to { text-shadow: 0 0 30px #ffd700, 0 0 50px #ff69b4; }
         }
 
-        /* Subtitle được trang trí đẹp lung linh */
         .subtitle {
             font-size: 2.4em;
             font-weight: bold;
@@ -190,6 +189,27 @@
             will-change: transform;
         }
 
+        /* Hiệu ứng emoji khi click */
+        .click-emoji {
+            position: absolute;
+            font-size: 3em;
+            pointer-events: none;
+            user-select: none;
+            animation: flyUp 1.8s ease-out forwards;
+            z-index: 10;
+        }
+
+        @keyframes flyUp {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-300px) scale(0.5);
+                opacity: 0;
+            }
+        }
+
         @media (max-width: 768px) {
             h1 { font-size: 2.8em; }
             .subtitle { font-size: 1.8em; padding: 10px 20px; }
@@ -197,6 +217,7 @@
             .unit { padding: 20px 25px; min-width: 100px; }
             #happyBirthday { font-size: 3.5em; }
             .emoji { font-size: 3.5em; }
+            .click-emoji { font-size: 2.5em; }
         }
     </style>
 </head>
@@ -235,6 +256,27 @@
     </div>
 
     <script>
+        // Danh sách emoji sinh nhật đẹp
+        const birthdayEmojis = ['🎉', '🎊', '🎂', '🥳', '🎈', '🎁', '🍰', '✨', '🎆', '🧁', '🎀', '🍭'];
+
+        // Khi click (hoặc tap trên mobile) bất kỳ đâu trên màn hình
+        document.body.addEventListener('click', function(e) {
+            const emoji = document.createElement('div');
+            emoji.classList.add('click-emoji');
+            emoji.textContent = birthdayEmojis[Math.floor(Math.random() * birthdayEmojis.length)];
+            
+            // Vị trí click
+            emoji.style.left = e.clientX + 'px';
+            emoji.style.top = e.clientY + 'px';
+            
+            document.body.appendChild(emoji);
+            
+            // Xóa sau khi animation kết thúc để tránh đầy bộ nhớ
+            setTimeout(() => {
+                emoji.remove();
+            }, 2000);
+        });
+
         // Sinh nhật: 26/02 lúc đúng 20:00:00 năm tới
         const birthday = new Date();
         const now = new Date();
