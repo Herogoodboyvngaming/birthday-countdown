@@ -28,7 +28,6 @@
             cursor: pointer;
         }
 
-        /* Background mới: ảnh tĩnh siêu đẹp giống trong ảnh bạn gửi (bánh kem, bóng bay, confetti, màu pastel) */
         .birthday-bg {
             position: absolute;
             inset: 0;
@@ -190,7 +189,6 @@
             will-change: transform;
         }
 
-        /* Nút phát nhạc */
         #musicButton {
             margin: 30px auto;
             padding: 15px 40px;
@@ -215,23 +213,31 @@
             100% { box-shadow: 0 8px 20px rgba(255, 105, 180, 0.6); }
         }
 
-        /* YouTube Player: full vừa khung, responsive, bo tròn giống ảnh bạn gửi */
-        #youtubePlayer {
-            width: 90%;
-            max-width: 600px;
-            aspect-ratio: 16 / 9; /* Giữ tỷ lệ video chuẩn */
-            margin: 30px auto;
-            border-radius: 20px;
+        /* Player: đĩa xoay + phát âm thanh từ YouTube (ẩn video hoàn toàn) */
+        #musicPlayer {
+            width: 320px;
+            height: 320px;
+            margin: 40px auto;
+            position: relative;
+            display: none;
+            border-radius: 50%;
             overflow: hidden;
             box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-            display: none;
-            background: #000; /* Nền đen khi load */
         }
 
-        #youtubePlayer iframe {
+        #vinylDisc {
             width: 100%;
             height: 100%;
-            border: none;
+            background: url('https://media.giphy.com/media/3o72F7R8V2AA8Z2A5O/giphy.gif') center/cover no-repeat;
+            border-radius: 50%;
+        }
+
+        #youtubeAudio {
+            position: absolute;
+            top: -1000px; /* Ẩn iframe hoàn toàn khỏi màn hình */
+            left: -1000px;
+            width: 1px;
+            height: 1px;
         }
 
         .click-emoji {
@@ -263,14 +269,12 @@
             .emoji { font-size: 3.5em; }
             .click-emoji { font-size: 2.5em; }
             #musicButton { font-size: 1.5em; padding: 12px 30px; }
-            #youtubePlayer { width: 95%; border-radius: 15px; }
+            #musicPlayer { width: 260px; height: 260px; }
         }
     </style>
 </head>
 <body>
-    <!-- Background mới: ảnh tĩnh đẹp có bánh kem, nến, bóng bay, confetti và chữ Happy Birthday -->
     <div class="birthday-bg"></div>
-    
     <div class="overlay"></div>
 
     <div class="fireworks-container" id="fireworksContainer">
@@ -295,12 +299,12 @@
 
         <button id="musicButton">🎵 BẤM VÀO ĐÂY ĐỂ PHÁT NHẠC SINH NHẬT 🎵</button>
 
-        <div id="youtubePlayer">
-            <iframe 
-                src="https://www.youtube.com/embed/Wu8NeFXaoOc?autoplay=1&loop=1&playlist=Wu8NeFXaoOc&modestbranding=1&rel=0&controls=1" 
-                frameborder="0" 
-                allow="autoplay; encrypted-media" 
-                allowfullscreen>
+        <!-- Player: đĩa xoay + âm thanh YouTube ẩn -->
+        <div id="musicPlayer">
+            <div id="vinylDisc"></div>
+            <iframe id="youtubeAudio" 
+                src="https://www.youtube.com/embed/Wu8NeFXaoOc?autoplay=1&loop=1&playlist=Wu8NeFXaoOc&controls=0&modestbranding=1&rel=0&fs=0&iv_load_policy=3&disablekb=1" 
+                allow="autoplay">
             </iframe>
         </div>
         
@@ -318,7 +322,7 @@
         const birthdayEmojis = ['🎉', '🎊', '🎂', '🥳', '🎈', '🎁', '🍰', '✨', '🎆', '🧁', '🎀', '🍭'];
 
         document.body.addEventListener('click', function(e) {
-            if (e.target.closest('#musicButton') || e.target.closest('#youtubePlayer')) return;
+            if (e.target.closest('#musicButton') || e.target.closest('#musicPlayer')) return;
 
             const emoji = document.createElement('div');
             emoji.classList.add('click-emoji');
@@ -335,15 +339,16 @@
         });
 
         const musicButton = document.getElementById('musicButton');
-        const youtubePlayer = document.getElementById('youtubePlayer');
+        const musicPlayer = document.getElementById('musicPlayer');
 
         musicButton.addEventListener('click', function(e) {
             e.stopPropagation();
-            youtubePlayer.style.display = 'block';
+            musicPlayer.style.display = 'block';
             musicButton.style.display = 'none';
+            // autoplay sẽ chạy vì đã có tương tác click
         });
 
-        // Countdown đến 20:00 ngày 26/02/2026
+        // Countdown...
         const birthday = new Date();
         const now = new Date();
         const currentMonth = now.getMonth();
@@ -374,8 +379,8 @@
                     happyEl.style.display = 'block';
                     happyEl.style.opacity = '1';
                     fireworksEl.classList.add('active');
-                    if (youtubePlayer.style.display === 'none') {
-                        youtubePlayer.style.display = 'block';
+                    if (musicPlayer.style.display === 'none') {
+                        musicPlayer.style.display = 'block';
                         musicButton.style.display = 'none';
                     }
                 }, 1200);
