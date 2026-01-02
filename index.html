@@ -21,24 +21,37 @@
             text-align: center;
             overflow: hidden;
             position: relative;
-            background: radial-gradient(circle at center, #000428, #000);
+            background: linear-gradient(to bottom, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
         }
 
-        .night-sky {
+        /* Background sinh nhật siêu đẹp: bóng bay, confetti nhẹ + gradient màu pastel */
+        .birthday-bg {
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at 50% 30%, #001133 0%, #000000 70%);
+            background: 
+                url('https://i.pinimg.com/originals/1b/1c/4b/1b1c4b3f5e5e5e5e5e5e5e5e5e5e5e5e.gif') center/cover no-repeat, /* confetti nhẹ */
+                url('https://i.gifer.com/embedded/download/7J8Y.gif') center/cover no-repeat, /* bóng bay bay lên */
+                linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #ff9a9e 100%);
+            background-blend-mode: screen;
+            opacity: 0.85;
             z-index: -2;
+            animation: bgAnimate 30s ease infinite;
+        }
+
+        @keyframes bgAnimate {
+            0% { background-position: 50% 50%, 50% 100%, 0% 0%; }
+            50% { background-position: 50% 50%, 50% 0%, 100% 100%; }
+            100% { background-position: 50% 50%, 50% 100%, 0% 0%; }
         }
 
         .overlay {
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.35);
             z-index: 1;
             pointer-events: none;
         }
@@ -214,7 +227,6 @@
             100% { box-shadow: 0 8px 20px rgba(255, 105, 180, 0.6); }
         }
 
-        /* YouTube player */
         #youtubePlayer {
             width: 100%;
             max-width: 800px;
@@ -226,7 +238,6 @@
             display: none;
         }
 
-        /* Hiệu ứng emoji khi click */
         .click-emoji {
             position: absolute;
             font-size: 3em;
@@ -261,7 +272,9 @@
     </style>
 </head>
 <body>
-    <div class="night-sky"></div>
+    <!-- Background sinh nhật mới siêu đẹp -->
+    <div class="birthday-bg"></div>
+    
     <div class="overlay"></div>
 
     <div class="fireworks-container" id="fireworksContainer">
@@ -284,10 +297,8 @@
             <div class="unit"><span class="number" id="seconds">00</span><div class="label">Giây</div></div>
         </div>
 
-        <!-- Nút phát nhạc -->
         <button id="musicButton">🎵 BẤM VÀO ĐÂY ĐỂ PHÁT NHẠC SINH NHẬT 🎵</button>
 
-        <!-- YouTube Player (iframe) -->
         <div id="youtubePlayer">
             <iframe 
                 src="https://www.youtube.com/embed/Wu8NeFXaoOc?autoplay=1&loop=1&playlist=Wu8NeFXaoOc&modestbranding=1&rel=0" 
@@ -308,12 +319,9 @@
     </div>
 
     <script>
-        // Danh sách emoji sinh nhật
         const birthdayEmojis = ['🎉', '🎊', '🎂', '🥳', '🎈', '🎁', '🍰', '✨', '🎆', '🧁', '🎀', '🍭'];
 
-        // Click để thả emoji
         document.body.addEventListener('click', function(e) {
-            // Tránh tạo emoji khi bấm vào nút nhạc hoặc player
             if (e.target.closest('#musicButton') || e.target.closest('#youtubePlayer')) return;
 
             const emoji = document.createElement('div');
@@ -330,17 +338,16 @@
             }, 2000);
         });
 
-        // Xử lý nút phát nhạc
         const musicButton = document.getElementById('musicButton');
         const youtubePlayer = document.getElementById('youtubePlayer');
 
         musicButton.addEventListener('click', function(e) {
-            e.stopPropagation(); // Ngăn tạo emoji khi bấm nút
+            e.stopPropagation();
             youtubePlayer.style.display = 'block';
-            musicButton.style.display = 'none'; // Ẩn nút sau khi bấm
+            musicButton.style.display = 'none';
         });
 
-        // Sinh nhật: 26/02 lúc đúng 20:00:00 năm 2026
+        // Countdown đến 20:00 ngày 26/02/2026
         const birthday = new Date();
         const now = new Date();
         const currentMonth = now.getMonth();
@@ -352,7 +359,7 @@
         } else {
             birthday.setFullYear(now.getFullYear());
         }
-        birthday.setMonth(1); // Tháng 2
+        birthday.setMonth(1);
         birthday.setDate(26);
         birthday.setHours(20, 0, 0, 0);
 
@@ -371,7 +378,6 @@
                     happyEl.style.display = 'block';
                     happyEl.style.opacity = '1';
                     fireworksEl.classList.add('active');
-                    // Tự động bật nhạc khi đến giờ sinh nhật (nếu chưa bật)
                     if (youtubePlayer.style.display === 'none') {
                         youtubePlayer.style.display = 'block';
                         musicButton.style.display = 'none';
