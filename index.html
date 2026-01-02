@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⏰ 🎉 Countdown ⏰ 🎂 Sinh Nhật Nguyễn Chí Dự 🎂 🥳</title>
+    <title>⏰ 🎉 Countdown Sinh Nhật Nguyễn Chí Dự 🎂 🥳</title>
     <meta name="description" content="Countdown siêu đẹp đến 20:00 ngày 26/02 - Sinh nhật Nguyễn Chí Dự!">
     
     <!-- Tối ưu load GIF pháo hoa -->
@@ -25,7 +25,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer; /* Gợi ý có thể click */
+            cursor: pointer;
         }
 
         .night-sky {
@@ -189,6 +189,43 @@
             will-change: transform;
         }
 
+        /* Nút phát nhạc */
+        #musicButton {
+            margin: 30px auto;
+            padding: 15px 40px;
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #fff;
+            background: linear-gradient(45deg, #ff69b4, #ff1493);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.6);
+            transition: all 0.3s ease;
+            animation: pulseButton 2s infinite;
+        }
+        #musicButton:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 30px rgba(255, 105, 180, 0.8);
+        }
+        @keyframes pulseButton {
+            0% { box-shadow: 0 8px 20px rgba(255, 105, 180, 0.6); }
+            50% { box-shadow: 0 12px 30px rgba(255, 105, 180, 0.9); }
+            100% { box-shadow: 0 8px 20px rgba(255, 105, 180, 0.6); }
+        }
+
+        /* YouTube player */
+        #youtubePlayer {
+            width: 100%;
+            max-width: 800px;
+            height: 450px;
+            margin: 30px auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            display: none;
+        }
+
         /* Hiệu ứng emoji khi click */
         .click-emoji {
             position: absolute;
@@ -218,6 +255,8 @@
             #happyBirthday { font-size: 3.5em; }
             .emoji { font-size: 3.5em; }
             .click-emoji { font-size: 2.5em; }
+            #musicButton { font-size: 1.5em; padding: 12px 30px; }
+            #youtubePlayer { height: 300px; }
         }
     </style>
 </head>
@@ -244,6 +283,19 @@
             <div class="unit"><span class="number" id="minutes">00</span><div class="label">Phút</div></div>
             <div class="unit"><span class="number" id="seconds">00</span><div class="label">Giây</div></div>
         </div>
+
+        <!-- Nút phát nhạc -->
+        <button id="musicButton">🎵 BẤM VÀO ĐÂY ĐỂ PHÁT NHẠC SINH NHẬT 🎵</button>
+
+        <!-- YouTube Player (iframe) -->
+        <div id="youtubePlayer">
+            <iframe 
+                src="https://www.youtube.com/embed/Wu8NeFXaoOc?autoplay=1&loop=1&playlist=Wu8NeFXaoOc&modestbranding=1&rel=0" 
+                frameborder="0" 
+                allow="autoplay; encrypted-media" 
+                allowfullscreen>
+            </iframe>
+        </div>
         
         <p id="happyBirthday">
             🎉🎆🥳<br>
@@ -256,28 +308,39 @@
     </div>
 
     <script>
-        // Danh sách emoji sinh nhật đẹp
+        // Danh sách emoji sinh nhật
         const birthdayEmojis = ['🎉', '🎊', '🎂', '🥳', '🎈', '🎁', '🍰', '✨', '🎆', '🧁', '🎀', '🍭'];
 
-        // Khi click (hoặc tap trên mobile) bất kỳ đâu trên màn hình
+        // Click để thả emoji
         document.body.addEventListener('click', function(e) {
+            // Tránh tạo emoji khi bấm vào nút nhạc hoặc player
+            if (e.target.closest('#musicButton') || e.target.closest('#youtubePlayer')) return;
+
             const emoji = document.createElement('div');
             emoji.classList.add('click-emoji');
             emoji.textContent = birthdayEmojis[Math.floor(Math.random() * birthdayEmojis.length)];
             
-            // Vị trí click
             emoji.style.left = e.clientX + 'px';
             emoji.style.top = e.clientY + 'px';
             
             document.body.appendChild(emoji);
             
-            // Xóa sau khi animation kết thúc để tránh đầy bộ nhớ
             setTimeout(() => {
                 emoji.remove();
             }, 2000);
         });
 
-        // Sinh nhật: 26/02 lúc đúng 20:00:00 năm tới
+        // Xử lý nút phát nhạc
+        const musicButton = document.getElementById('musicButton');
+        const youtubePlayer = document.getElementById('youtubePlayer');
+
+        musicButton.addEventListener('click', function(e) {
+            e.stopPropagation(); // Ngăn tạo emoji khi bấm nút
+            youtubePlayer.style.display = 'block';
+            musicButton.style.display = 'none'; // Ẩn nút sau khi bấm
+        });
+
+        // Sinh nhật: 26/02 lúc đúng 20:00:00 năm 2026
         const birthday = new Date();
         const now = new Date();
         const currentMonth = now.getMonth();
@@ -308,6 +371,11 @@
                     happyEl.style.display = 'block';
                     happyEl.style.opacity = '1';
                     fireworksEl.classList.add('active');
+                    // Tự động bật nhạc khi đến giờ sinh nhật (nếu chưa bật)
+                    if (youtubePlayer.style.display === 'none') {
+                        youtubePlayer.style.display = 'block';
+                        musicButton.style.display = 'none';
+                    }
                 }, 1200);
                 return;
             }
