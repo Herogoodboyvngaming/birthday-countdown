@@ -2,30 +2,37 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>⏰ 🎉 Countdown Sinh Nhật Nguyễn Chí Dự 🎂 🥳</title>
     <meta name="description" content="Countdown siêu đẹp đến 20:00 ngày 26/02 - Sinh nhật Nguyễn Chí Dự!">
     
-    <!-- Tối ưu load GIF pháo hoa -->
+    <!-- Tối ưu load cực mạnh -->
+    <link rel="preload" href="https://static.vecteezy.com/system/resources/previews/031/586/844/large_2x/balloons-cake-candles-and-happy-birthday-create-a-festive-background-ai-generated-photo.jpg" as="image">
+    <link rel="preload" href="https://media.giphy.com/media/3o72F7R8V2AA8Z2A5O/giphy.gif" as="image">
     <link rel="preload" href="https://i.pinimg.com/originals/76/b5/82/76b58298e9cee7c935f9ec9ba1433508.gif" as="image">
     <link rel="preload" href="https://i.pinimg.com/originals/7a/f2/ef/7af2ef0b0b2294982218b48d4a1f488b.gif" as="image">
-    
+
     <style>
         * { box-sizing: border-box; }
-        body {
+        html, body {
             margin: 0;
             padding: 0;
-            min-height: 100vh;
+            height: 100%;
+            overflow: hidden;
             font-family: 'Arial', sans-serif;
             color: #fff;
             text-align: center;
-            overflow: hidden;
-            position: relative;
             background: #000;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            touch-action: manipulation;
         }
 
         .birthday-bg {
@@ -33,6 +40,8 @@
             inset: 0;
             background: url('https://static.vecteezy.com/system/resources/previews/031/586/844/large_2x/balloons-cake-candles-and-happy-birthday-create-a-festive-background-ai-generated-photo.jpg') center center / cover no-repeat;
             z-index: -2;
+            will-change: transform;
+            contain: layout style;
         }
 
         .overlay {
@@ -41,6 +50,8 @@
             background: rgba(0, 0, 0, 0.45);
             z-index: 1;
             pointer-events: none;
+            will-change: opacity;
+            contain: strict;
         }
 
         .content {
@@ -54,39 +65,39 @@
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
             max-width: 95%;
             width: 900px;
+            will-change: transform;
+            contain: layout style paint;
         }
 
         .emoji {
             font-size: 4.5em;
             margin: 15px 0;
-            animation: float 5s ease-in-out infinite;
+            will-change: transform;
         }
         @keyframes float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-25px); }
         }
+        .emoji { animation: float 5s ease-in-out infinite; }
 
         h1 {
             font-size: 3.8em;
             color: #ffd700;
             text-shadow: 0 0 20px #ff69b4, 0 0 40px #ff1493;
             margin: 10px 0;
-            animation: glow 3s infinite alternate;
+            will-change: text-shadow;
         }
         @keyframes glow {
             from { text-shadow: 0 0 20px #ff69b4, 0 0 40px #ff1493; }
             to { text-shadow: 0 0 30px #ffd700, 0 0 50px #ff69b4; }
         }
+        h1 { animation: glow 3s infinite alternate; }
 
         .subtitle {
             font-size: 2.4em;
             font-weight: bold;
             color: #ff69b4;
-            text-shadow: 
-                0 0 10px #ffd700,
-                0 0 20px #ff1493,
-                0 0 30px #ff69b4,
-                2px 2px 15px rgba(0,0,0,0.8);
+            text-shadow: 0 0 10px #ffd700, 0 0 20px #ff1493, 0 0 30px #ff69b4, 2px 2px 15px rgba(0,0,0,0.8);
             margin: 40px 0 50px;
             padding: 15px 30px;
             background: rgba(255, 255, 255, 0.1);
@@ -94,16 +105,12 @@
             backdrop-filter: blur(8px);
             display: inline-block;
             border: 2px dashed #ffd700;
-            animation: 
-                subtlePulse 4s infinite,
-                rainbowGlow 8s linear infinite;
+            will-change: transform, box-shadow, opacity;
         }
-
         @keyframes subtlePulse {
             0%, 100% { transform: scale(1); opacity: 0.9; }
             50% { transform: scale(1.05); opacity: 1; }
         }
-
         @keyframes rainbowGlow {
             0%   { box-shadow: 0 0 20px #ff0000; }
             16%  { box-shadow: 0 0 20px #ff9900; }
@@ -112,6 +119,9 @@
             66%  { box-shadow: 0 0 20px #00ffff; }
             83%  { box-shadow: 0 0 20px #ff00ff; }
             100% { box-shadow: 0 0 20px #ff0000; }
+        }
+        .subtitle {
+            animation: subtlePulse 4s infinite, rainbowGlow 8s linear infinite;
         }
 
         #countdown {
@@ -123,6 +133,7 @@
             margin: 40px 0;
             opacity: 1;
             transition: opacity 1.2s ease-out;
+            will-change: opacity;
         }
 
         .unit {
@@ -133,6 +144,7 @@
             backdrop-filter: blur(8px);
             border: 3px solid #ff69b4;
             box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
+            will-change: transform;
         }
 
         .number {
@@ -150,6 +162,7 @@
             letter-spacing: 2px;
         }
 
+        /* Chúc mừng sinh nhật mới - siêu đẹp với icon và thông tin tuổi */
         #happyBirthday {
             font-size: 5em;
             color: #ffd700;
@@ -158,7 +171,8 @@
             opacity: 0;
             animation: celebratePulse 2s infinite;
             margin: 40px 0;
-            line-height: 1.4;
+            line-height: 1.6;
+            will-change: transform;
         }
         @keyframes celebratePulse {
             0% { transform: scale(1); }
@@ -175,6 +189,7 @@
             visibility: hidden;
             transition: opacity 1.8s ease-in;
             will-change: opacity;
+            contain: strict;
         }
         .fireworks-container.active {
             opacity: 1;
@@ -200,20 +215,19 @@
             border-radius: 50px;
             cursor: pointer;
             box-shadow: 0 8px 20px rgba(255, 105, 180, 0.6);
-            transition: all 0.3s ease;
-            animation: pulseButton 2s infinite;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            will-change: transform, box-shadow;
         }
         #musicButton:hover {
-            transform: scale(1.1);
-            box-shadow: 0 12px 30px rgba(255, 105, 180, 0.8);
+            transform: translateY(-3px) scale(1.05);
         }
         @keyframes pulseButton {
             0% { box-shadow: 0 8px 20px rgba(255, 105, 180, 0.6); }
             50% { box-shadow: 0 12px 30px rgba(255, 105, 180, 0.9); }
             100% { box-shadow: 0 8px 20px rgba(255, 105, 180, 0.6); }
         }
+        #musicButton { animation: pulseButton 2s infinite; }
 
-        /* Player: đĩa xoay + phát âm thanh từ YouTube (ẩn video hoàn toàn) */
         #musicPlayer {
             width: 320px;
             height: 320px;
@@ -223,6 +237,7 @@
             border-radius: 50%;
             overflow: hidden;
             box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            will-change: transform;
         }
 
         #vinylDisc {
@@ -234,7 +249,7 @@
 
         #youtubeAudio {
             position: absolute;
-            top: -1000px; /* Ẩn iframe hoàn toàn khỏi màn hình */
+            top: -1000px;
             left: -1000px;
             width: 1px;
             height: 1px;
@@ -247,17 +262,13 @@
             user-select: none;
             animation: flyUp 1.8s ease-out forwards;
             z-index: 10;
+            will-change: transform, opacity;
+            contain: layout;
         }
 
         @keyframes flyUp {
-            0% {
-                transform: translateY(0) scale(1);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-300px) scale(0.5);
-                opacity: 0;
-            }
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-300px) scale(0.5); opacity: 0; }
         }
 
         @media (max-width: 768px) {
@@ -299,7 +310,6 @@
 
         <button id="musicButton">🎵 BẤM VÀO ĐÂY ĐỂ PHÁT NHẠC SINH NHẬT 🎵</button>
 
-        <!-- Player: đĩa xoay + âm thanh YouTube ẩn -->
         <div id="musicPlayer">
             <div id="vinylDisc"></div>
             <iframe id="youtubeAudio" 
@@ -308,18 +318,20 @@
             </iframe>
         </div>
         
+        <!-- Chúc mừng sinh nhật mới với đầy icon và thông tin tuổi 17 -->
         <p id="happyBirthday">
-            🎉🎆🥳<br>
+            🎉🎊🥳🎆🎂<br>
             CHÚC MỪNG SINH NHẬT<br>
-            NGUYỄN CHÍ DỰ!<br>
-            🎂🎈🎆
+            NGUYỄN CHÍ DỰ!<br><br>
+            Năm nay bạn đã tròn <strong>17 tuổi</strong> 🎈✨<br>
+            CHÚC MỪNG BẠN!!! 🎁🍰🎇
         </p>
         
         <div class="emoji">🎁🍰🎈</div>
     </div>
 
     <script>
-        const birthdayEmojis = ['🎉', '🎊', '🎂', '🥳', '🎈', '🎁', '🍰', '✨', '🎆', '🧁', '🎀', '🍭'];
+        const birthdayEmojis = ['🎉','🎊','🎂','🥳','🎈','🎁','🍰','✨','🎆','🧁','🎀','🍭'];
 
         document.body.addEventListener('click', function(e) {
             if (e.target.closest('#musicButton') || e.target.closest('#musicPlayer')) return;
@@ -327,15 +339,11 @@
             const emoji = document.createElement('div');
             emoji.classList.add('click-emoji');
             emoji.textContent = birthdayEmojis[Math.floor(Math.random() * birthdayEmojis.length)];
-            
             emoji.style.left = e.clientX + 'px';
             emoji.style.top = e.clientY + 'px';
-            
             document.body.appendChild(emoji);
             
-            setTimeout(() => {
-                emoji.remove();
-            }, 2000);
+            setTimeout(() => emoji.remove(), 2000);
         });
 
         const musicButton = document.getElementById('musicButton');
@@ -345,10 +353,9 @@
             e.stopPropagation();
             musicPlayer.style.display = 'block';
             musicButton.style.display = 'none';
-            // autoplay sẽ chạy vì đã có tương tác click
         });
 
-        // Countdown...
+        // Countdown chính xác đến đúng 20:00:00 ngày 26/02/2026
         const birthday = new Date();
         const now = new Date();
         const currentMonth = now.getMonth();
@@ -360,7 +367,7 @@
         } else {
             birthday.setFullYear(now.getFullYear());
         }
-        birthday.setMonth(1);
+        birthday.setMonth(1); // February
         birthday.setDate(26);
         birthday.setHours(20, 0, 0, 0);
 
@@ -368,8 +375,8 @@
         const happyEl = document.getElementById('happyBirthday');
         const fireworksEl = document.getElementById('fireworksContainer');
 
-        function updateCountdown() {
-            const now = new Date().getTime();
+        function update() {
+            const now = Date.now();
             const diff = birthday.getTime() - now;
 
             if (diff <= 0) {
@@ -387,19 +394,20 @@
                 return;
             }
 
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            const days = Math.floor(diff / 86400000);
+            const hours = Math.floor((diff % 86400000) / 3600000);
+            const minutes = Math.floor((diff % 3600000) / 60000);
+            const seconds = Math.floor((diff % 60000) / 1000);
 
             document.getElementById('days').textContent = days.toString().padStart(2, '0');
             document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
             document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
             document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+
+            requestAnimationFrame(update);
         }
 
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
+        requestAnimationFrame(update);
     </script>
 </body>
 </html>
