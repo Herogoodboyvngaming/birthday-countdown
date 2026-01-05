@@ -2,11 +2,9 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>🎉 Countdown Sinh Nhật Nguyễn Chí Dự 🎂</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Preload background mới để load tức thì, không lỗi crop -->
-    <link rel="preload" href="https://images.pexels.com/photos/949592/pexels-photo-949592.jpeg" as="image">
 </head>
 <body>
     <div class="bg"></div>
@@ -32,9 +30,18 @@
             <div class="box"><span id="seconds">00</span><span>Giây</span></div>
         </div>
 
-        <button id="musicBtn">🎵 BẤM ĐỂ BẬT NHẠC NỀN 🎵</button>
+        <button id="memoryBtn">❤️ XEM KỈ NIỆM ❤️</button>
 
-        <p id="musicTitle" class="music-title">🎶 "Khúc Hát Mừng Sinh Nhậ t" - Phan Đình Tùng đang phát 🎶</p>
+        <div class="memory-box" id="memoryBox">
+            <h3>Những kỉ niệm của Nguyễn Chí Dự</h3>
+            <p>Bây giờ chưa có kỉ niệm gì huhu 😭</p>
+            <p>Các bạn hãy đợi năm sau nhé, mình sẽ cố gắng thu thập nhiều kỉ niệm nhất có thể!</p>
+            <p>Mong các bạn tha lỗi cho mình nha 🥹</p>
+            <div class="memory-content">
+                <img src="https://via.placeholder.com/600x400?text=Coming+Soon+Next+Year" alt="Kỉ niệm sắp có">
+                <p>(Ảnh/video kỉ niệm sẽ được thêm vào năm sau ❤️)</p>
+            </div>
+        </div>
 
         <div class="wish" id="wish">
             🎉🎊🥳🎆🎂🎈✨<br>
@@ -47,47 +54,36 @@
         <div class="emojis bottom">🎁🍰🎈🎊🥳🎉✨</div>
     </main>
 
-    <!-- Nhạc nền Phan Đình Tùng -->
-    <iframe id="youtubePlayer" 
-    src="https://www.youtube.com/embed/SH3U37kkuA0?autoplay=0&loop=1&playlist=SH3U37kkuA0&controls=0&modestbranding=1&rel=0&fs=0&iv_load_policy=3&disablekb=1&enablejsapi=1" 
-    allow="autoplay" style="display:none;">
-    </iframe>
-
     <script>
+        // Tối ưu emoji click: debounce và limit số lượng
         const emojis = ['🎉','🎊','🎂','🥳','🎈','🎁','🍰','✨','🎆','🎇','🎀','🍭','🎁','🥂'];
+        let clickTimeout;
 
         document.body.addEventListener('click', e => {
-            if (e.target.id === 'musicBtn') return;
+            if (e.target.id === 'memoryBtn') return;
 
-            const el = document.createElement('div');
-            el.classList.add('fly-emoji');
-            el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-            el.style.left = e.clientX + 'px';
-            el.style.top = e.clientY + 'px';
-            document.body.appendChild(el);
-            setTimeout(() => el.remove(), 2000);
+            clearTimeout(clickTimeout);
+            clickTimeout = setTimeout(() => {
+                const el = document.createElement('div');
+                el.classList.add('fly-emoji');
+                el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                el.style.left = `${e.clientX}px`;
+                el.style.top = `${e.clientY}px`;
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 2000);
+            }, 100); // debounce 100ms để tránh spam emoji gây lag
         });
 
-        const musicBtn = document.getElementById('musicBtn');
-        const musicTitle = document.getElementById('musicTitle');
-        const player = document.getElementById('youtubePlayer');
+        const memoryBtn = document.getElementById('memoryBtn');
+        const memoryBox = document.getElementById('memoryBox');
 
-        let isPlaying = false;
-
-        musicBtn.addEventListener('click', () => {
-            if (isPlaying) {
-                player.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
-                musicBtn.textContent = '🎵 BẤM ĐỂ BẬT NHẠC NỀN 🎵';
-                musicTitle.style.display = 'none';
-                isPlaying = false;
-            } else {
-                player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-                musicBtn.textContent = '⏸ TẮT NHẠC NỀN';
-                musicTitle.style.display = 'block';
-                isPlaying = true;
-            }
+        memoryBtn.addEventListener('click', e => {
+            e.stopPropagation();
+            memoryBox.style.display = 'block';
+            memoryBtn.style.display = 'none';
         });
 
+        // Countdown siêu mượt với requestAnimationFrame
         const target = new Date();
         const now = new Date();
         if (now.getMonth() > 1 || (now.getMonth() === 1 && (now.getDate() > 26 || (now.getDate() === 26 && now.getHours() >= 20)))) {
@@ -103,7 +99,16 @@
         const wishEl = document.getElementById('wish');
         const fireworksEl = document.getElementById('fireworks');
 
-        function tick() {
+        let lastTime = 0;
+
+        function tick(time) {
+            if (!lastTime) lastTime = time;
+            if (time - lastTime < 1000) { // update mỗi giây để tránh over-update
+                requestAnimationFrame(tick);
+                return;
+            }
+            lastTime = time;
+
             const diff = target - Date.now();
             if (diff <= 0) {
                 timerEl.style.opacity = '0';
@@ -112,12 +117,6 @@
                     wishEl.style.display = 'block';
                     wishEl.style.opacity = '1';
                     fireworksEl.classList.add('active');
-                    if (!isPlaying) {
-                        player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-                        musicBtn.textContent = '⏸ TẮT NHẠC NỀN';
-                        musicTitle.style.display = 'block';
-                        isPlaying = true;
-                    }
                 }, 1200);
                 return;
             }
