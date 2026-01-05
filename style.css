@@ -115,7 +115,7 @@ h1 {
     100% { box-shadow: 0 0 50px rgba(255,0,255,0.9); }
 }
 
-.music-title {
+.music-title {.music-title {
     font-size: 2.2em;
     color: #f0f;
     text-shadow: 0 0 30px #ff0;
@@ -123,7 +123,6 @@ h1 {
     display: none;
     animation: pulse 3s infinite;
 }
-
 .wish {
     font-size: 5.5em;
     color: #ff0;
