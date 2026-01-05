@@ -6,8 +6,8 @@
     <title>⏰ 🎉 Countdown Sinh Nhật Nguyễn Chí Dự 🎂 🥳</title>
     <meta name="description" content="Countdown siêu đẹp đến 20:00 ngày 26/02 - Sinh nhật Nguyễn Chí Dự!">
     
-    <!-- Tối ưu load: preload background và đĩa xoay chính -->
-    <link rel="preload" href="https://images.unsplash.com/photo-1513456852971-30c0b8199fce?w=1920&q=80" as="image">
+    <!-- Tối ưu load background mới -->
+    <link rel="preload" href="https://thumbs.dreamstime.com/b/festive-birthday-cake-confetti-explosion-party-celebration-neon-lights-festive-birthday-cake-confetti-explosion-party-celebration-360461471.jpg" as="image">
     <link rel="preload" href="https://media.giphy.com/media/3o72F7R8V2AA8Z2A5O/giphy.gif" as="image">
 
     <style>
@@ -33,13 +33,12 @@
             touch-action: manipulation;
         }
 
-        /* Background mới: dark neon party siêu đẹp, load chắc chắn từ Unsplash */
+        /* Background mới: dark neon với bánh kem, confetti explosion, chữ Happy Birthday ngầm (trong ảnh), balloons – siêu đẹp và có bánh kem rõ ràng! */
         .birthday-bg {
             position: absolute;
             inset: 0;
-            background: url('https://images.unsplash.com/photo-1513456852971-30c0b8199fce?w=1920&q=80') center center / cover no-repeat fixed;
+            background: url('https://thumbs.dreamstime.com/b/festive-birthday-cake-confetti-explosion-party-celebration-neon-lights-festive-birthday-cake-confetti-explosion-party-celebration-360461471.jpg') center center / cover no-repeat fixed;
             z-index: -2;
-            will-change: auto;
             contain: layout style;
         }
 
@@ -66,16 +65,14 @@
             contain: layout style paint;
         }
 
-        /* Tối ưu animation chỉ dùng GPU */
-        .emoji { font-size: 4.5em; margin: 15px 0; animation: float 5s ease-in-out infinite; will-change: transform; }
+        .emoji { font-size: 4.5em; margin: 15px 0; animation: float 5s ease-in-out infinite; }
         @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-25px); } }
 
         h1 { font-size: 3.8em; color: #ffd700; text-shadow: 0 0 20px #ff69b4, 0 0 40px #ff1493; margin: 10px 0; animation: glow 3s infinite alternate; }
         @keyframes glow { from { text-shadow: 0 0 20px #ff69b4, 0 0 40px #ff1493; } to { text-shadow: 0 0 30px #ffd700, 0 0 50px #ff69b4; } }
 
-        .subtitle { font-size: 2.4em; font-weight: bold; color: #ff69b4; text-shadow: 0 0 10px #ffd700, 0 0 20px #ff1493, 0 0 30px #ff69b4, 2px 2px 15px rgba(0,0,0,0.8); margin: 40px 0 50px; padding: 15px 30px; background: rgba(255,255,255,0.1); border-radius: 20px; backdrop-filter: blur(8px); display: inline-block; border: 2px dashed #ffd700; animation: subtlePulse 4s infinite, rainbowGlow 8s linear infinite; }
+        .subtitle { font-size: 2.4em; font-weight: bold; color: #ff69b4; text-shadow: 0 0 10px #ffd700, 0 0 20px #ff1493, 0 0 30px #ff69b4, 2px 2px 15px rgba(0,0,0,0.8); margin: 40px 0 50px; padding: 15px 30px; background: rgba(255,255,255,0.1); border-radius: 20px; backdrop-filter: blur(8px); display: inline-block; border: 2px dashed #ffd700; animation: subtlePulse 4s infinite; }
         @keyframes subtlePulse { 0%,100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.05); opacity: 1; } }
-        @keyframes rainbowGlow { 0% { box-shadow: 0 0 20px #ff0000; } 100% { box-shadow: 0 0 20px #ff0000; } } /* Giảm rainbow để mượt hơn */
 
         #countdown { font-size: 5em; display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; margin: 40px 0; opacity: 1; transition: opacity 1.2s ease-out; }
 
@@ -117,7 +114,9 @@
     </style>
 </head>
 <body>
+    <!-- Background mới: bánh kem sinh nhật neon, confetti bùng nổ, party lights, có yếu tố "Happy Birthday" trong phong cách neon -->
     <div class="birthday-bg"></div>
+    
     <div class="overlay"></div>
 
     <div class="fireworks-container" id="fireworksContainer">
@@ -163,8 +162,6 @@
 
     <script>
         const birthdayEmojis = ['🎉','🎊','🎂','🥳','🎈','🎁','🍰','✨','🎆','🧁','🎀','🍭'];
-
-        document.body.addEventListener('touchstart', function(e) {}, {passive: true}); // Tối ưu touch
 
         document.body.addEventListener('click', function(e) {
             if (e.target.closest('#musicButton') || e.target.closest('#musicPlayer')) return;
