@@ -2,137 +2,121 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>⏰ 🎉 Countdown Sinh Nhật Nguyễn Chí Dự 🎂 🥳</title>
-    <meta name="description" content="Countdown siêu đẹp đến 20:00 ngày 26/02 - Sinh nhật Nguyễn Chí Dự!">
-    
-    <!-- Tối ưu load background và đĩa xoay -->
-    <link rel="preload" href="https://images.unsplash.com/photo-1513456852971-30c0b8199fce?w=1920&q=80" as="image">
-    <link rel="preload" href="https://media.giphy.com/media/3o72F7R8V2AA8Z2A5O/giphy.gif" as="image">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎉 Countdown Sinh Nhật Nguyễn Chí Dự 🎂</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preload" href="https://thumbs.dreamstime.com/b/vibrant-happy-birthday-neon-sign-balloons-cakes-festive-celebration-surrounded-confetti-perfect-358478432.jpg" as="image">
+    <link rel="preload" href="https://media.giphy.com/media/3o72F7R8V2AA8Z2A5O/giphy.gif" as="image">
 </head>
 <body>
-    <div class="birthday-bg"></div>
+    <div class="bg"></div>
     <div class="overlay"></div>
 
-    <div class="fireworks-container" id="fireworksContainer">
-        <img src="https://i.pinimg.com/originals/76/b5/82/76b58298e9cee7c935f9ec9ba1433508.gif" alt="Pháo hoa 1">
-        <img src="https://i.pinimg.com/originals/7a/f2/ef/7af2ef0b0b2294982218b48d4a1f488b.gif" alt="Pháo hoa 2">
-        <img src="https://media.tenor.com/ZYSYsmBaqHMAAAAM/fireworks-firework.gif" alt="Pháo hoa 3">
-        <img src="https://i.gifer.com/7J8Z.gif" alt="Pháo hoa 4">
+    <div class="fireworks" id="fireworks">
+        <img src="https://i.pinimg.com/originals/76/b5/82/76b58298e9cee7c935f9ec9ba1433508.gif">
+        <img src="https://i.pinimg.com/originals/7a/f2/ef/7af2ef0b0b2294982218b48d4a1f488b.gif">
+        <img src="https://media.tenor.com/ZYSYsmBaqHMAAAAM/fireworks-firework.gif">
+        <img src="https://i.gifer.com/7J8Z.gif">
     </div>
 
-    <div class="content">
-        <div class="emoji top-emoji">🎉🥳🎂🎊🎆</div>
-        <h1>⏰ COUNTDOWN TỚI SINH NHẬT <br>NGUYỄN CHÍ DỰ 🎂</h1>
+    <main class="main">
+        <div class="emojis top">🎉🥳🎂🎊🎆🎈</div>
+        <h1>COUNTDOWN TỚI SINH NHẬT<br>NGUYỄN CHÍ DỰ</h1>
         
-        <p class="subtitle">🎈 CÙNG ĐỢI TỚI NGÀY SINH NHẬT TUI NHÉ MỌI NGƯỜI 🎈</p>
+        <p class="invite">🎈 CÙNG ĐỢI TỚI NGÀY SINH NHẬT TUI NHÉ MỌI NGƯỜI 🎈</p>
         
-        <div id="countdown">
-            <div class="unit"><span class="number" id="days">00</span><div class="label">Ngày</div></div>
-            <div class="unit"><span class="number" id="hours">00</span><div class="label">Giờ</div></div>
-            <div class="unit"><span class="number" id="minutes">00</span><div class="label">Phút</div></div>
-            <div class="unit"><span class="number" id="seconds">00</span><div class="label">Giây</div></div>
+        <div class="timer" id="timer">
+            <div class="box"><span id="days">00</span><span>Ngày</span></div>
+            <div class="box"><span id="hours">00</span><span>Giờ</span></div>
+            <div class="box"><span id="minutes">00</span><span>Phút</span></div>
+            <div class="box"><span id="seconds">00</span><span>Giây</span></div>
         </div>
 
-        <button id="musicButton">🎵 BẤM VÀO ĐÂY ĐỂ PHÁT NHẠC SINH NHẬT 🎵</button>
+        <button id="playBtn">🎵 PHÁT NHẠC SINH NHẬT 🎵</button>
 
-        <div id="musicPlayer">
-            <div id="vinylDisc"></div>
-            <iframe id="youtubeAudio" 
-                src="https://www.youtube.com/embed/Wu8NeFXaoOc?autoplay=1&loop=1&playlist=Wu8NeFXaoOc&controls=0&modestbranding=1&rel=0&fs=0&iv_load_policy=3&disablekb=1" 
-                allow="autoplay">
-            </iframe>
+        <div class="player" id="player">
+            <div class="disc"></div>
+            <iframe src="https://www.youtube.com/embed/Wu8NeFXaoOc?autoplay=1&loop=1&playlist=Wu8NeFXaoOc&controls=0&modestbranding=1&rel=0&fs=0&iv_load_policy=3&disablekb=1" allow="autoplay"></iframe>
         </div>
-        
-        <p id="happyBirthday">
-            🎉🎊🥳🎆🎂🎈✨<br>
+
+        <div class="wish" id="wish">
+            🎉🎊🥳🎆🎂🎈<br>
             CHÚC MỪNG SINH NHẬT<br>
             NGUYỄN CHÍ DỰ!<br><br>
-            Năm nay bạn đã tròn <strong>17 tuổi</strong> 🍰🎁<br>
-            CHÚC MỪNG BẠN!!! 🎇🥂🎉
-        </p>
-        
-        <div class="emoji bottom-emoji">🎁🍰🎈🎊🥳</div>
-    </div>
+            Năm nay bạn đã tròn <strong>17 tuổi</strong> ✨<br>
+            CHÚC MỪNG BẠN!!! 🎁🍰🎇
+        </div>
+
+        <div class="emojis bottom">🎁🍰🎈🎊🥳🎉</div>
+    </main>
 
     <script>
-        const birthdayEmojis = ['🎉','🎊','🎂','🥳','🎈','🎁','🍰','✨','🎆','🧁','🎀','🍭','🎇','🥂'];
+        const emojis = ['🎉','🎊','🎂','🥳','🎈','🎁','🍰','✨','🎆','🎇','🎀','🍭'];
 
-        document.body.addEventListener('click', function(e) {
-            if (e.target.closest('#musicButton') || e.target.closest('#musicPlayer')) return;
-
-            const emoji = document.createElement('div');
-            emoji.classList.add('click-emoji');
-            emoji.textContent = birthdayEmojis[Math.floor(Math.random() * birthdayEmojis.length)];
-            emoji.style.left = e.clientX + 'px';
-            emoji.style.top = e.clientY + 'px';
-            document.body.appendChild(emoji);
-            setTimeout(() => emoji.remove(), 2000);
+        document.body.addEventListener('click', e => {
+            if (e.target.closest('#playBtn') || e.target.closest('.player')) return;
+            const el = document.createElement('div');
+            el.classList.add('fly-emoji');
+            el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            el.style.left = e.clientX + 'px';
+            el.style.top = e.clientY + 'px';
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 2000);
         });
 
-        const musicButton = document.getElementById('musicButton');
-        const musicPlayer = document.getElementById('musicPlayer');
-
-        musicButton.addEventListener('click', function(e) {
+        document.getElementById('playBtn').addEventListener('click', e => {
             e.stopPropagation();
-            musicPlayer.style.display = 'block';
-            musicButton.style.display = 'none';
+            document.getElementById('player').style.display = 'block';
+            document.getElementById('playBtn').style.display = 'none';
         });
 
-        const birthday = new Date();
+        const target = new Date();
         const now = new Date();
-        const currentMonth = now.getMonth();
-        const currentDay = now.getDate();
-        const currentHour = now.getHours();
-
-        if (currentMonth > 1 || (currentMonth === 1 && (currentDay > 26 || (currentDay === 26 && currentHour >= 20)))) {
-            birthday.setFullYear(now.getFullYear() + 1);
+        if (now.getMonth() > 1 || (now.getMonth() === 1 && (now.getDate() > 26 || (now.getDate() === 26 && now.getHours() >= 20)))) {
+            target.setFullYear(now.getFullYear() + 1);
         } else {
-            birthday.setFullYear(now.getFullYear());
+            target.setFullYear(now.getFullYear());
         }
-        birthday.setMonth(1);
-        birthday.setDate(26);
-        birthday.setHours(20, 0, 0, 0);
+        target.setMonth(1);
+        target.setDate(26);
+        target.setHours(20, 0, 0, 0);
 
-        const countdownEl = document.getElementById('countdown');
-        const happyEl = document.getElementById('happyBirthday');
-        const fireworksEl = document.getElementById('fireworksContainer');
+        const timerEl = document.getElementById('timer');
+        const wishEl = document.getElementById('wish');
+        const fireworksEl = document.getElementById('fireworks');
+        const player = document.getElementById('player');
+        const playBtn = document.getElementById('playBtn');
 
-        function update() {
-            const now = Date.now();
-            const diff = birthday.getTime() - now;
-
+        function tick() {
+            const diff = target - Date.now();
             if (diff <= 0) {
-                countdownEl.style.opacity = '0';
+                timerEl.style.opacity = '0';
                 setTimeout(() => {
-                    countdownEl.style.display = 'none';
-                    happyEl.style.display = 'block';
-                    happyEl.style.opacity = '1';
+                    timerEl.style.display = 'none';
+                    wishEl.style.display = 'block';
+                    wishEl.style.opacity = '1';
                     fireworksEl.classList.add('active');
-                    if (musicPlayer.style.display === 'none') {
-                        musicPlayer.style.display = 'block';
-                        musicButton.style.display = 'none';
+                    if (player.style.display === 'none') {
+                        player.style.display = 'block';
+                        playBtn.style.display = 'none';
                     }
                 }, 1200);
                 return;
             }
 
-            const days = Math.floor(diff / 86400000);
-            const hours = Math.floor((diff % 86400000) / 3600000);
-            const minutes = Math.floor((diff % 3600000) / 60000);
-            const seconds = Math.floor((diff % 60000) / 1000);
+            const d = Math.floor(diff / 86400000);
+            const h = Math.floor((diff % 86400000) / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
 
-            document.getElementById('days').textContent = days.toString().padStart(2, '0');
-            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            document.getElementById('days').textContent = d.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = h.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = m.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = s.toString().padStart(2, '0');
 
-            requestAnimationFrame(update);
+            requestAnimationFrame(tick);
         }
-
-        requestAnimationFrame(update);
+        requestAnimationFrame(tick);
     </script>
 </body>
 </html>
