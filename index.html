@@ -7,7 +7,7 @@
     <meta name="description" content="Countdown siêu đẹp đến 20:00 ngày 26/02 - Sinh nhật Nguyễn Chí Dự!">
     
     <!-- Tối ưu load cực mạnh -->
-    <link rel="preload" href="https://static.vecteezy.com/system/resources/previews/031/586/844/large_2x/balloons-cake-candles-and-happy-birthday-create-a-festive-background-ai-generated-photo.jpg" as="image">
+    <link rel="preload" href="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1920&q=80" as="image">
     <link rel="preload" href="https://media.giphy.com/media/3o72F7R8V2AA8Z2A5O/giphy.gif" as="image">
     <link rel="preload" href="https://i.pinimg.com/originals/76/b5/82/76b58298e9cee7c935f9ec9ba1433508.gif" as="image">
     <link rel="preload" href="https://i.pinimg.com/originals/7a/f2/ef/7af2ef0b0b2294982218b48d4a1f488b.gif" as="image">
@@ -35,10 +35,11 @@
             touch-action: manipulation;
         }
 
+        /* Background mới: dark neon birthday party với balloons, cake, confetti – siêu đẹp giống ảnh bạn gửi */
         .birthday-bg {
             position: absolute;
             inset: 0;
-            background: url('https://static.vecteezy.com/system/resources/previews/031/586/844/large_2x/balloons-cake-candles-and-happy-birthday-create-a-festive-background-ai-generated-photo.jpg') center center / cover no-repeat;
+            background: url('https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1920&q=80') center center / cover no-repeat;
             z-index: -2;
             will-change: transform;
             contain: layout style;
@@ -47,13 +48,14 @@
         .overlay {
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.45);
+            background: rgba(0, 0, 0, 0.5); /* Mờ hơn để chữ neon nổi bật */
             z-index: 1;
             pointer-events: none;
             will-change: opacity;
             contain: strict;
         }
 
+        /* Các phần còn lại giữ nguyên để mượt và đẹp */
         .content {
             position: relative;
             z-index: 2;
@@ -162,7 +164,6 @@
             letter-spacing: 2px;
         }
 
-        /* Chúc mừng sinh nhật mới - siêu đẹp với icon và thông tin tuổi */
         #happyBirthday {
             font-size: 5em;
             color: #ffd700;
@@ -285,7 +286,9 @@
     </style>
 </head>
 <body>
+    <!-- Background mới: dark neon birthday party với confetti rơi, balloons, bokeh lights – giống hệt ảnh bạn gửi -->
     <div class="birthday-bg"></div>
+    
     <div class="overlay"></div>
 
     <div class="fireworks-container" id="fireworksContainer">
@@ -318,7 +321,6 @@
             </iframe>
         </div>
         
-        <!-- Chúc mừng sinh nhật mới với đầy icon và thông tin tuổi 17 -->
         <p id="happyBirthday">
             🎉🎊🥳🎆🎂<br>
             CHÚC MỪNG SINH NHẬT<br>
@@ -355,7 +357,6 @@
             musicButton.style.display = 'none';
         });
 
-        // Countdown chính xác đến đúng 20:00:00 ngày 26/02/2026
         const birthday = new Date();
         const now = new Date();
         const currentMonth = now.getMonth();
@@ -367,7 +368,7 @@
         } else {
             birthday.setFullYear(now.getFullYear());
         }
-        birthday.setMonth(1); // February
+        birthday.setMonth(1);
         birthday.setDate(26);
         birthday.setHours(20, 0, 0, 0);
 
