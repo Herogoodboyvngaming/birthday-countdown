@@ -5,8 +5,9 @@ body { display: flex; align-items: center; justify-content: center; background: 
 .bg {
     position: fixed;
     inset: 0;
-    background: url('https://images.unsplash.com/photo-1513456852971-30c0b8199fce?w=1920&q=80') center/cover no-repeat fixed;
+    background: url('https://wallpapercave.com/wp/wp7631848.jpg') center/cover no-repeat fixed;
     z-index: -2;
+}
 }
 
 .overlay {
