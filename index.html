@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎉 Countdown Sinh Nhật Nguyễn Chí Dự 🎂</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Preload background để load nhanh -->
     <link rel="preload" href="https://images.unsplash.com/photo-1513456852971-30c0b8199fce?w=1920&q=80" as="image">
-    <link rel="preload" href="https://media.giphy.com/media/3o72F7R8V2AA8Z2A5O/giphy.gif" as="image">
 </head>
 <body>
     <div class="bg"></div>
@@ -32,12 +32,11 @@
             <div class="box"><span id="seconds">00</span><span>Giây</span></div>
         </div>
 
-        <button id="playBtn">🎵 PHÁT NHẠC SINH NHẬT 🎵</button>
+        <!-- Nút bật/tắt nhạc -->
+        <button id="musicBtn">🎵 BẤM ĐỂ BẬT NHẠC NỀN 🎵</button>
 
-        <div class="player" id="player">
-            <div class="disc"></div>
-            <iframe src="https://www.youtube.com/embed/Wu8NeFXaoOc?autoplay=1&loop=1&playlist=Wu8NeFXaoOc&controls=0&modestbranding=1&rel=0&fs=0&iv_load_policy=3&disablekb=1" allow="autoplay"></iframe>
-        </div>
+        <!-- Title hiển thị khi nhạc đang phát -->
+        <p id="musicTitle" class="music-title">🎶 Nhạc nền đang phát 🎶</p>
 
         <div class="wish" id="wish">
             🎉🎊🥳🎆🎂🎈✨<br>
@@ -50,11 +49,18 @@
         <div class="emojis bottom">🎁🍰🎈🎊🥳🎉✨</div>
     </main>
 
+    <!-- Audio ẩn – phát nhạc nền từ YouTube (chỉ âm thanh) -->
+    <iframe id="youtubePlayer" 
+        src="https://www.youtube.com/embed/Wu8NeFXaoOc?autoplay=0&loop=1&playlist=Wu8NeFXaoOc&controls=0&modestbranding=1&rel=0&fs=0&iv_load_policy=3&disablekb=1" 
+        allow="autoplay" style="display:none;">
+    </iframe>
+
     <script>
         const emojis = ['🎉','🎊','🎂','🥳','🎈','🎁','🍰','✨','🎆','🎇','🎀','🍭','🎁','🥂'];
 
         document.body.addEventListener('click', e => {
-            if (e.target.closest('#playBtn') || e.target.closest('.player')) return;
+            if (e.target.id === 'musicBtn') return; // Không thả emoji khi bấm nút nhạc
+
             const el = document.createElement('div');
             el.classList.add('fly-emoji');
             el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
@@ -64,12 +70,29 @@
             setTimeout(() => el.remove(), 2000);
         });
 
-        document.getElementById('playBtn').addEventListener('click', e => {
-            e.stopPropagation();
-            document.getElementById('player').style.display = 'block';
-            document.getElementById('playBtn').style.display = 'none';
+        const musicBtn = document.getElementById('musicBtn');
+        const musicTitle = document.getElementById('musicTitle');
+        const player = document.getElementById('youtubePlayer');
+
+        let isPlaying = false;
+
+        musicBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                // Tắt nhạc
+                player.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+                musicBtn.textContent = '🎵 BẤM ĐỂ BẬT NHẠC NỀN 🎵';
+                musicTitle.style.display = 'none';
+                isPlaying = false;
+            } else {
+                // Bật nhạc
+                player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+                musicBtn.textContent = '⏸ TẮT NHẠC NỀN';
+                musicTitle.style.display = 'block';
+                isPlaying = true;
+            }
         });
 
+        // Tự động bật nhạc khi đến giờ sinh nhật (nếu chưa bật)
         const target = new Date();
         const now = new Date();
         if (now.getMonth() > 1 || (now.getMonth() === 1 && (now.getDate() > 26 || (now.getDate() === 26 && now.getHours() >= 20)))) {
@@ -84,8 +107,6 @@
         const timerEl = document.getElementById('timer');
         const wishEl = document.getElementById('wish');
         const fireworksEl = document.getElementById('fireworks');
-        const player = document.getElementById('player');
-        const playBtn = document.getElementById('playBtn');
 
         function tick() {
             const diff = target - Date.now();
@@ -96,9 +117,11 @@
                     wishEl.style.display = 'block';
                     wishEl.style.opacity = '1';
                     fireworksEl.classList.add('active');
-                    if (player.style.display === 'none') {
-                        player.style.display = 'block';
-                        playBtn.style.display = 'none';
+                    if (!isPlaying) {
+                        player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+                        musicBtn.textContent = '⏸ TẮT NHẠC NỀN';
+                        musicTitle.style.display = 'block';
+                        isPlaying = true;
                     }
                 }, 1200);
                 return;
