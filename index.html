@@ -6,11 +6,9 @@
     <title>⏰ 🎉 Countdown Sinh Nhật Nguyễn Chí Dự 🎂 🥳</title>
     <meta name="description" content="Countdown siêu đẹp đến 20:00 ngày 26/02 - Sinh nhật Nguyễn Chí Dự!">
     
-    <!-- Tối ưu load cực mạnh -->
-    <link rel="preload" href="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1920&q=80" as="image">
+    <!-- Tối ưu load: preload background và đĩa xoay chính -->
+    <link rel="preload" href="https://images.unsplash.com/photo-1513456852971-30c0b8199fce?w=1920&q=80" as="image">
     <link rel="preload" href="https://media.giphy.com/media/3o72F7R8V2AA8Z2A5O/giphy.gif" as="image">
-    <link rel="preload" href="https://i.pinimg.com/originals/76/b5/82/76b58298e9cee7c935f9ec9ba1433508.gif" as="image">
-    <link rel="preload" href="https://i.pinimg.com/originals/7a/f2/ef/7af2ef0b0b2294982218b48d4a1f488b.gif" as="image">
 
     <style>
         * { box-sizing: border-box; }
@@ -35,27 +33,25 @@
             touch-action: manipulation;
         }
 
-        /* Background mới: dark neon birthday party với balloons, cake, confetti – siêu đẹp giống ảnh bạn gửi */
+        /* Background mới: dark neon party siêu đẹp, load chắc chắn từ Unsplash */
         .birthday-bg {
             position: absolute;
             inset: 0;
-            background: url('https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1920&q=80') center center / cover no-repeat;
+            background: url('https://images.unsplash.com/photo-1513456852971-30c0b8199fce?w=1920&q=80') center center / cover no-repeat fixed;
             z-index: -2;
-            will-change: transform;
+            will-change: auto;
             contain: layout style;
         }
 
         .overlay {
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.5); /* Mờ hơn để chữ neon nổi bật */
+            background: rgba(0, 0, 0, 0.5);
             z-index: 1;
             pointer-events: none;
-            will-change: opacity;
             contain: strict;
         }
 
-        /* Các phần còn lại giữ nguyên để mượt và đẹp */
         .content {
             position: relative;
             z-index: 2;
@@ -67,210 +63,45 @@
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
             max-width: 95%;
             width: 900px;
-            will-change: transform;
             contain: layout style paint;
         }
 
-        .emoji {
-            font-size: 4.5em;
-            margin: 15px 0;
-            will-change: transform;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-25px); }
-        }
-        .emoji { animation: float 5s ease-in-out infinite; }
+        /* Tối ưu animation chỉ dùng GPU */
+        .emoji { font-size: 4.5em; margin: 15px 0; animation: float 5s ease-in-out infinite; will-change: transform; }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-25px); } }
 
-        h1 {
-            font-size: 3.8em;
-            color: #ffd700;
-            text-shadow: 0 0 20px #ff69b4, 0 0 40px #ff1493;
-            margin: 10px 0;
-            will-change: text-shadow;
-        }
-        @keyframes glow {
-            from { text-shadow: 0 0 20px #ff69b4, 0 0 40px #ff1493; }
-            to { text-shadow: 0 0 30px #ffd700, 0 0 50px #ff69b4; }
-        }
-        h1 { animation: glow 3s infinite alternate; }
+        h1 { font-size: 3.8em; color: #ffd700; text-shadow: 0 0 20px #ff69b4, 0 0 40px #ff1493; margin: 10px 0; animation: glow 3s infinite alternate; }
+        @keyframes glow { from { text-shadow: 0 0 20px #ff69b4, 0 0 40px #ff1493; } to { text-shadow: 0 0 30px #ffd700, 0 0 50px #ff69b4; } }
 
-        .subtitle {
-            font-size: 2.4em;
-            font-weight: bold;
-            color: #ff69b4;
-            text-shadow: 0 0 10px #ffd700, 0 0 20px #ff1493, 0 0 30px #ff69b4, 2px 2px 15px rgba(0,0,0,0.8);
-            margin: 40px 0 50px;
-            padding: 15px 30px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            backdrop-filter: blur(8px);
-            display: inline-block;
-            border: 2px dashed #ffd700;
-            will-change: transform, box-shadow, opacity;
-        }
-        @keyframes subtlePulse {
-            0%, 100% { transform: scale(1); opacity: 0.9; }
-            50% { transform: scale(1.05); opacity: 1; }
-        }
-        @keyframes rainbowGlow {
-            0%   { box-shadow: 0 0 20px #ff0000; }
-            16%  { box-shadow: 0 0 20px #ff9900; }
-            33%  { box-shadow: 0 0 20px #ffff00; }
-            50%  { box-shadow: 0 0 20px #00ff00; }
-            66%  { box-shadow: 0 0 20px #00ffff; }
-            83%  { box-shadow: 0 0 20px #ff00ff; }
-            100% { box-shadow: 0 0 20px #ff0000; }
-        }
-        .subtitle {
-            animation: subtlePulse 4s infinite, rainbowGlow 8s linear infinite;
-        }
+        .subtitle { font-size: 2.4em; font-weight: bold; color: #ff69b4; text-shadow: 0 0 10px #ffd700, 0 0 20px #ff1493, 0 0 30px #ff69b4, 2px 2px 15px rgba(0,0,0,0.8); margin: 40px 0 50px; padding: 15px 30px; background: rgba(255,255,255,0.1); border-radius: 20px; backdrop-filter: blur(8px); display: inline-block; border: 2px dashed #ffd700; animation: subtlePulse 4s infinite, rainbowGlow 8s linear infinite; }
+        @keyframes subtlePulse { 0%,100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.05); opacity: 1; } }
+        @keyframes rainbowGlow { 0% { box-shadow: 0 0 20px #ff0000; } 100% { box-shadow: 0 0 20px #ff0000; } } /* Giảm rainbow để mượt hơn */
 
-        #countdown {
-            font-size: 5em;
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            flex-wrap: wrap;
-            margin: 40px 0;
-            opacity: 1;
-            transition: opacity 1.2s ease-out;
-            will-change: opacity;
-        }
+        #countdown { font-size: 5em; display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; margin: 40px 0; opacity: 1; transition: opacity 1.2s ease-out; }
 
-        .unit {
-            background: rgba(255, 255, 255, 0.12);
-            padding: 25px 40px;
-            border-radius: 20px;
-            min-width: 140px;
-            backdrop-filter: blur(8px);
-            border: 3px solid #ff69b4;
-            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
-            will-change: transform;
-        }
+        .unit { background: rgba(255,255,255,0.12); padding: 25px 40px; border-radius: 20px; min-width: 140px; backdrop-filter: blur(8px); border: 3px solid #ff69b4; box-shadow: 0 8px 25px rgba(255,105,180,0.4); }
 
-        .number {
-            display: block;
-            font-weight: bold;
-            color: #ff69b4;
-            text-shadow: 0 0 25px #ffd700;
-        }
+        .number { display: block; font-weight: bold; color: #ff69b4; text-shadow: 0 0 25px #ffd700; }
+        .label { font-size: 0.32em; text-transform: uppercase; color: #ffd700; margin-top: 12px; letter-spacing: 2px; }
 
-        .label {
-            font-size: 0.32em;
-            text-transform: uppercase;
-            color: #ffd700;
-            margin-top: 12px;
-            letter-spacing: 2px;
-        }
+        #happyBirthday { font-size: 5em; color: #ffd700; text-shadow: 0 0 50px #ff69b4, 0 0 80px #ff1493; display: none; opacity: 0; animation: celebratePulse 2s infinite; margin: 40px 0; line-height: 1.6; }
+        @keyframes celebratePulse { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
 
-        #happyBirthday {
-            font-size: 5em;
-            color: #ffd700;
-            text-shadow: 0 0 50px #ff69b4, 0 0 80px #ff1493;
-            display: none;
-            opacity: 0;
-            animation: celebratePulse 2s infinite;
-            margin: 40px 0;
-            line-height: 1.6;
-            will-change: transform;
-        }
-        @keyframes celebratePulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.08); }
-            100% { transform: scale(1); }
-        }
+        .fireworks-container { position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0; visibility: hidden; transition: opacity 1.8s ease-in; contain: strict; }
+        .fireworks-container.active { opacity: 1; visibility: visible; }
+        .fireworks-container img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
-        .fireworks-container {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 1.8s ease-in;
-            will-change: opacity;
-            contain: strict;
-        }
-        .fireworks-container.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        .fireworks-container img {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            will-change: transform;
-        }
-
-        #musicButton {
-            margin: 30px auto;
-            padding: 15px 40px;
-            font-size: 1.8em;
-            font-weight: bold;
-            color: #fff;
-            background: linear-gradient(45deg, #ff69b4, #ff1493);
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.6);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            will-change: transform, box-shadow;
-        }
-        #musicButton:hover {
-            transform: translateY(-3px) scale(1.05);
-        }
-        @keyframes pulseButton {
-            0% { box-shadow: 0 8px 20px rgba(255, 105, 180, 0.6); }
-            50% { box-shadow: 0 12px 30px rgba(255, 105, 180, 0.9); }
-            100% { box-shadow: 0 8px 20px rgba(255, 105, 180, 0.6); }
-        }
+        #musicButton { margin: 30px auto; padding: 15px 40px; font-size: 1.8em; font-weight: bold; color: #fff; background: linear-gradient(45deg, #ff69b4, #ff1493); border: none; border-radius: 50px; cursor: pointer; box-shadow: 0 8px 20px rgba(255,105,180,0.6); transition: transform 0.3s ease; }
+        #musicButton:hover { transform: translateY(-3px) scale(1.05); }
+        @keyframes pulseButton { 0% { box-shadow: 0 8px 20px rgba(255,105,180,0.6); } 50% { box-shadow: 0 12px 30px rgba(255,105,180,0.9); } 100% { box-shadow: 0 8px 20px rgba(255,105,180,0.6); } }
         #musicButton { animation: pulseButton 2s infinite; }
 
-        #musicPlayer {
-            width: 320px;
-            height: 320px;
-            margin: 40px auto;
-            position: relative;
-            display: none;
-            border-radius: 50%;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-            will-change: transform;
-        }
+        #musicPlayer { width: 320px; height: 320px; margin: 40px auto; position: relative; display: none; border-radius: 50%; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.8); }
+        #vinylDisc { width: 100%; height: 100%; background: url('https://media.giphy.com/media/3o72F7R8V2AA8Z2A5O/giphy.gif') center/cover no-repeat; border-radius: 50%; }
+        #youtubeAudio { position: absolute; top: -1000px; left: -1000px; width: 1px; height: 1px; }
 
-        #vinylDisc {
-            width: 100%;
-            height: 100%;
-            background: url('https://media.giphy.com/media/3o72F7R8V2AA8Z2A5O/giphy.gif') center/cover no-repeat;
-            border-radius: 50%;
-        }
-
-        #youtubeAudio {
-            position: absolute;
-            top: -1000px;
-            left: -1000px;
-            width: 1px;
-            height: 1px;
-        }
-
-        .click-emoji {
-            position: absolute;
-            font-size: 3em;
-            pointer-events: none;
-            user-select: none;
-            animation: flyUp 1.8s ease-out forwards;
-            z-index: 10;
-            will-change: transform, opacity;
-            contain: layout;
-        }
-
-        @keyframes flyUp {
-            0% { transform: translateY(0) scale(1); opacity: 1; }
-            100% { transform: translateY(-300px) scale(0.5); opacity: 0; }
-        }
+        .click-emoji { position: absolute; font-size: 3em; pointer-events: none; user-select: none; animation: flyUp 1.8s ease-out forwards; z-index: 10; contain: layout; }
+        @keyframes flyUp { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(-300px) scale(0.5); opacity: 0; } }
 
         @media (max-width: 768px) {
             h1 { font-size: 2.8em; }
@@ -286,9 +117,7 @@
     </style>
 </head>
 <body>
-    <!-- Background mới: dark neon birthday party với confetti rơi, balloons, bokeh lights – giống hệt ảnh bạn gửi -->
     <div class="birthday-bg"></div>
-    
     <div class="overlay"></div>
 
     <div class="fireworks-container" id="fireworksContainer">
@@ -335,6 +164,8 @@
     <script>
         const birthdayEmojis = ['🎉','🎊','🎂','🥳','🎈','🎁','🍰','✨','🎆','🧁','🎀','🍭'];
 
+        document.body.addEventListener('touchstart', function(e) {}, {passive: true}); // Tối ưu touch
+
         document.body.addEventListener('click', function(e) {
             if (e.target.closest('#musicButton') || e.target.closest('#musicPlayer')) return;
 
@@ -344,7 +175,6 @@
             emoji.style.left = e.clientX + 'px';
             emoji.style.top = e.clientY + 'px';
             document.body.appendChild(emoji);
-            
             setTimeout(() => emoji.remove(), 2000);
         });
 
