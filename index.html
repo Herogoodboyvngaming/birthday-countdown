@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎉 Countdown Sinh Nhật Nguyễn Chí Dự 🎂</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Preload background để load nhanh -->
+    <!-- Preload background -->
     <link rel="preload" href="https://images.unsplash.com/photo-1513456852971-30c0b8199fce?w=1920&q=80" as="image">
 </head>
 <body>
@@ -32,11 +32,9 @@
             <div class="box"><span id="seconds">00</span><span>Giây</span></div>
         </div>
 
-        <!-- Nút bật/tắt nhạc -->
         <button id="musicBtn">🎵 BẤM ĐỂ BẬT NHẠC NỀN 🎵</button>
 
-        <!-- Title hiển thị khi nhạc đang phát -->
-        <p id="musicTitle" class="music-title">🎶 Nhạc nền đang phát 🎶</p>
+        <p id="musicTitle" class="music-title">🎶 "Khúc Hát Mừng Sinh Nhật" - Phan Đình Tùng đang phát 🎶</p>
 
         <div class="wish" id="wish">
             🎉🎊🥳🎆🎂🎈✨<br>
@@ -49,9 +47,9 @@
         <div class="emojis bottom">🎁🍰🎈🎊🥳🎉✨</div>
     </main>
 
-    <!-- Audio ẩn – phát nhạc nền từ YouTube (chỉ âm thanh) -->
+    <!-- Iframe YouTube ẩn – phát bài "Khúc Hát Mừng Sinh Nhật" của Phan Đình Tùng -->
     <iframe id="youtubePlayer" 
-        src="https://www.youtube.com/embed/Wu8NeFXaoOc?autoplay=0&loop=1&playlist=Wu8NeFXaoOc&controls=0&modestbranding=1&rel=0&fs=0&iv_load_policy=3&disablekb=1" 
+        src="https://www.youtube.com/embed/SH3U37kkuA0?autoplay=0&loop=1&playlist=SH3U37kkuA0&controls=0&modestbranding=1&rel=0&fs=0&iv_load_policy=3&disablekb=1" 
         allow="autoplay" style="display:none;">
     </iframe>
 
@@ -59,7 +57,7 @@
         const emojis = ['🎉','🎊','🎂','🥳','🎈','🎁','🍰','✨','🎆','🎇','🎀','🍭','🎁','🥂'];
 
         document.body.addEventListener('click', e => {
-            if (e.target.id === 'musicBtn') return; // Không thả emoji khi bấm nút nhạc
+            if (e.target.id === 'musicBtn') return;
 
             const el = document.createElement('div');
             el.classList.add('fly-emoji');
@@ -78,13 +76,11 @@
 
         musicBtn.addEventListener('click', () => {
             if (isPlaying) {
-                // Tắt nhạc
                 player.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
                 musicBtn.textContent = '🎵 BẤM ĐỂ BẬT NHẠC NỀN 🎵';
                 musicTitle.style.display = 'none';
                 isPlaying = false;
             } else {
-                // Bật nhạc
                 player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
                 musicBtn.textContent = '⏸ TẮT NHẠC NỀN';
                 musicTitle.style.display = 'block';
@@ -92,7 +88,7 @@
             }
         });
 
-        // Tự động bật nhạc khi đến giờ sinh nhật (nếu chưa bật)
+        // Countdown đến 20:00 ngày 26/02/2026
         const target = new Date();
         const now = new Date();
         if (now.getMonth() > 1 || (now.getMonth() === 1 && (now.getDate() > 26 || (now.getDate() === 26 && now.getHours() >= 20)))) {
