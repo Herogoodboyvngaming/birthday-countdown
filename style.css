@@ -5,14 +5,14 @@ body { display: flex; align-items: center; justify-content: center; background: 
 .bg {
     position: fixed;
     inset: 0;
-    background: #000; /* Nền đen thuần, không ảnh nữa */
+    background: #000; /* Nền đen thuần – KHÔNG ẢNH NỮA, KHỎI LỖI */
     z-index: -2;
 }
 
 .overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.6); /* Mờ nhẹ để chữ nổi hơn */
+    background: rgba(0,0,0,0.6); /* Mờ vừa đủ để chữ nổi bật */
     z-index: -1;
 }
 
@@ -115,7 +115,7 @@ h1 {
     100% { box-shadow: 0 0 50px rgba(255,0,255,0.9); }
 }
 
-.music-title {.music-title {
+.music-title {
     font-size: 2.2em;
     color: #f0f;
     text-shadow: 0 0 30px #ff0;
@@ -123,6 +123,7 @@ h1 {
     display: none;
     animation: pulse 3s infinite;
 }
+
 .wish {
     font-size: 5.5em;
     color: #ff0;
