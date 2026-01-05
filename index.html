@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎉 Countdown Sinh Nhật Nguyễn Chí Dự 🎂</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Preload background -->
-    <link rel="preload" href="https://images.unsplash.com/photo-1513456852971-30c0b8199fce?w=1920&q=80" as="image">
+    <!-- Preload background mới để load tức thì -->
+    <link rel="preload" href="https://wallpapercave.com/wp/wp7631848.jpg" as="image">
 </head>
 <body>
     <div class="bg"></div>
@@ -47,7 +47,7 @@
         <div class="emojis bottom">🎁🍰🎈🎊🥳🎉✨</div>
     </main>
 
-    <!-- Iframe YouTube ẩn – phát bài "Khúc Hát Mừng Sinh Nhật" của Phan Đình Tùng -->
+    <!-- Nhạc nền Phan Đình Tùng (ẩn iframe) -->
     <iframe id="youtubePlayer" 
         src="https://www.youtube.com/embed/SH3U37kkuA0?autoplay=0&loop=1&playlist=SH3U37kkuA0&controls=0&modestbranding=1&rel=0&fs=0&iv_load_policy=3&disablekb=1" 
         allow="autoplay" style="display:none;">
@@ -88,7 +88,6 @@
             }
         });
 
-        // Countdown đến 20:00 ngày 26/02/2026
         const target = new Date();
         const now = new Date();
         if (now.getMonth() > 1 || (now.getMonth() === 1 && (now.getDate() > 26 || (now.getDate() === 26 && now.getHours() >= 20)))) {
