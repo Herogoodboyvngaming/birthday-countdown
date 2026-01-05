@@ -5,15 +5,14 @@ body { display: flex; align-items: center; justify-content: center; background: 
 .bg {
     position: fixed;
     inset: 0;
-    background: url('https://images.pexels.com/photos/949592/pexels-photo-949592.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') center/cover no-repeat fixed;
+    background: #000; /* Nền đen thuần, không ảnh nữa */
     z-index: -2;
-}
 }
 
 .overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0, 0, 0, 0.6); /* Mờ hơn tí để chữ nổi bật */
     z-index: -1;
 }
 
