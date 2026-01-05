@@ -12,7 +12,7 @@ body { display: flex; align-items: center; justify-content: center; background: 
 .overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.6); /* Mờ hơn tí để chữ nổi bật */
+    background: rgba(0, 0, 0, 0.6); /* Mờ nhẹ để chữ nổi hơn */
     z-index: -1;
 }
 
