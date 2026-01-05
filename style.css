@@ -5,7 +5,7 @@ body { display: flex; align-items: center; justify-content: center; background: 
 .bg {
     position: fixed;
     inset: 0;
-    background: url('https://images.pexels.com/photos/949592/pexels-photo-949592.jpeg') center/cover no-repeat fixed;
+    background: url('https://images.pexels.com/photos/949592/pexels-photo-949592.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') center/cover no-repeat fixed;
     z-index: -2;
 }
 }
