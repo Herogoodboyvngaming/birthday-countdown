@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎉 Countdown Sinh Nhật Nguyễn Chí Dự 🎂</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Preload background bánh kem neon đẹp, high resolution, static -->
+    <!-- Preload background bánh kem neon -->
     <link rel="preload" href="https://thumbs.dreamstime.com/b/happy-birthday-cake-candles-confetti-party-celebration-colorful-festive-greeting-card-design-bright-neon-lights-360461469.jpg" as="image">
 </head>
 <body>
@@ -21,7 +21,7 @@
 
     <main class="container">
         <div class="emoji-top">🎉🥳🎂🎊🎆🎈✨</div>
-        <h1 class="rainbow-text">COUNTDOWN TỚI SINH NHẬT<br>NGUYỄN CHÍ DỰ</h1>
+        <h1 class="rainbow-border">COUNTDOWN TỚI SINH NHẬT<br>NGUYỄN CHÍ DỰ</h1>
         
         <p class="subtitle">🎈 CÙNG ĐỢI TỚI NGÀY SINH NHẬT TUI NHÉ MỌI NGƯỜI 🎈</p>
         
@@ -34,22 +34,18 @@
 
         <button id="musicBtn">🎵 BẬT NHẠC NỀN 🎵</button>
 
-        <button id="lyricsBtn">📜 BẤM VÀO ĐÂY ĐỂ BẬT LYRICS</button>
-
-        <div class="karaoke-box" id="karaokeBox">
-            <h3>Karaoke - Khúc Hát Mừng Sinh Nhật (Phan Đình Tùng)</h3>
-            <div id="lyricsLines" class="lyrics-lines"></div>
-        </div>
-
         <button id="memoryBtn">❤️ XEM KỈ NIỆM ❤️</button>
 
+        <!-- Hộp kỉ niệm với nút đóng và ảnh Coming Soon thật -->
         <div class="memory-section" id="memorySection">
+            <button class="close-btn" id="closeMemory">✖ ĐÓNG</button>
             <h3>Những kỉ niệm của Nguyễn Chí Dự</h3>
             <p>Bây giờ chưa có kỉ niệm gì huhu 😭</p>
             <p>Các bạn hãy đợi năm sau nhé, mình sẽ cố gắng thu thập nhiều kỉ niệm nhất có thể!</p>
             <p>Mong các bạn tha lỗi cho mình nha 🥹❤️</p>
             <div class="memory-placeholder">
-                <img src="https://via.placeholder.com/800x500?text=Coming+Soon+-+Kỉ+Niệm+Năm+Sau" alt="Kỉ niệm sắp có">
+                <img src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Kỉ niệm sắp có">
+                <p>(Ảnh/video kỉ niệm sẽ được thêm vào năm sau ❤️)</p>
             </div>
         </div>
 
