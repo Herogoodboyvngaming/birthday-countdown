@@ -18,7 +18,7 @@ body {
     justify-content: center;
 }
 
-/* Background ảnh bánh kem + Happy Birthday (static) */
+/* Background bánh kem + Happy Birthday neon (static) */
 .background {
     position: fixed;
     inset: 0;
@@ -100,26 +100,8 @@ h1 {
     letter-spacing: 2px;
 }
 
-/* Nút nhạc */
-#musicBtn {
-    padding: 20px 60px;
-    font-size: 2em;
-    background: linear-gradient(45deg, #ff69b4, #ff1493);
-    color: #fff;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    box-shadow: 0 8px 30px rgba(255, 105, 180, 0.8);
-    transition: transform 0.3s ease;
-    margin: 30px 0;
-}
-
-#musicBtn:hover {
-    transform: translateY(-5px) scale(1.05);
-}
-
-/* Nút kỉ niệm */
-#memoryBtn {
+/* Nút nhạc và lyrics */
+#musicBtn, #lyricsBtn, #memoryBtn {
     padding: 20px 60px;
     font-size: 2em;
     background: linear-gradient(45deg, #ff1493, #ff69b4);
@@ -129,13 +111,40 @@ h1 {
     cursor: pointer;
     box-shadow: 0 8px 30px rgba(255, 105, 180, 0.8);
     transition: transform 0.3s ease;
-    margin: 30px 0;
+    margin: 20px 0;
 }
 
-#memoryBtn:hover {
+#musicBtn:hover, #lyricsBtn:hover, #memoryBtn:hover {
     transform: translateY(-5px) scale(1.05);
 }
 
+/* Hộp lyrics */
+.lyrics-box {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 40px;
+    border-radius: 30px;
+    max-width: 800px;
+    margin: 40px auto;
+    border: 4px dashed #ffd700;
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
+    display: none;
+}
+
+.lyrics-box h3 {
+    font-size: 2.5em;
+    color: #ffd700;
+    text-shadow: 0 0 20px #ff69b4;
+    margin-bottom: 30px;
+}
+
+.lyrics-content p {
+    font-size: 1.8em;
+    color: #fff;
+    margin: 15px 0;
+    line-height: 1.6;
+}
+
+/* Hộp kỉ niệm giữ nguyên */
 .memory-section {
     background: rgba(0, 0, 0, 0.7);
     padding: 40px;
@@ -217,8 +226,8 @@ h1 {
     .time-box span:first-child { font-size: 3.5em; }
     .celebration { font-size: 3.8em; }
     .emojis { font-size: 4em; }
-    #musicBtn, #memoryBtn { font-size: 1.8em; padding: 18px 45px; }
-    .memory-section { padding: 30px; }
-    .memory-section h3 { font-size: 2.2em; }
-    .memory-section p { font-size: 1.6em; }
+    #musicBtn, #lyricsBtn, #memoryBtn { font-size: 1.8em; padding: 18px 45px; }
+    .memory-section, .lyrics-box { padding: 30px; }
+    .memory-section h3, .lyrics-box h3 { font-size: 2.2em; }
+    .memory-section p, .lyrics-content p { font-size: 1.6em; }
 }
