@@ -1,9 +1,9 @@
-// Emoji bay (debounce để tránh lag khi click nhanh)
+// Emoji bay (debounce tránh lag)
 const emojis = ['🎉','🎊','🎂','🥳','🎈','🎁','🍰','✨','🎆','🎇','🎀','🍭','🎁','🥂'];
 let clickTimeout = null;
 
 document.body.addEventListener('click', e => {
-    if (e.target.id === 'musicBtn' || e.target.id === 'lyricsBtn' || e.target.id === 'memoryBtn') return;
+    if (e.target.id === 'musicBtn' || e.target.id === 'memoryBtn' || e.target.id === 'closeMemory') return;
 
     clearTimeout(clickTimeout);
     clickTimeout = setTimeout(() => {
@@ -35,66 +35,10 @@ musicBtn.addEventListener('click', e => {
     }
 });
 
-// Nút bật lyrics karaoke
-const lyricsBtn = document.getElementById('lyricsBtn');
-const karaokeBox = document.getElementById('karaokeBox');
-const lyricsLines = document.getElementById('lyricsLines');
-
-lyricsBtn.addEventListener('click', e => {
-    e.stopPropagation();
-    karaokeBox.style.display = 'block';
-    lyricsBtn.style.display = 'none';
-});
-
-// Lyrics data
-const lyricsData = [
-    { text: "Ngày hôm nay ta cùng hân hoan nơi đây" },
-    { text: "Mọi người bên nhau ta hát mừng sinh nhật" },
-    { text: "1, 2, 3 ta cùng thổi tắt nến" },
-    { text: "Happy Birthday, Happy Birthday to you" },
-    { text: "On this day altogether will be" },
-    { text: "And we'll all sing for your birthday" },
-    { text: "One, two, three we blow up the candles" },
-    { text: "Happy Birthday, Happy Birthday to you" },
-    { text: "Chúc cho bạn luôn vui tươi" },
-    { text: "Chúc cho bạn luôn thành công" },
-    { text: "Chúc cho bạn luôn hạnh phúc" },
-    { text: "Happy Birthday to you!" }
-];
-
-lyricsData.forEach(line => {
-    const p = document.createElement('p');
-    p.textContent = line.text;
-    lyricsLines.appendChild(p);
-});
-
-// Simple karaoke highlight (mỗi dòng 5s)
-let currentLine = 0;
-let karaokeInterval;
-
-function startKaraoke() {
-    currentLine = 0;
-    const lines = lyricsLines.querySelectorAll('p');
-    lines.forEach(p => p.classList.remove('active'));
-
-    karaokeInterval = setInterval(() => {
-        if (currentLine > 0) lines[currentLine - 1].classList.remove('active');
-        if (currentLine < lines.length) {
-            lines[currentLine].classList.add('active');
-            currentLine++;
-        } else {
-            clearInterval(karaokeInterval);
-        }
-    }, 5000);
-}
-
-musicBtn.addEventListener('click', () => {
-    if (isPlaying && karaokeBox.style.display === 'block') startKaraoke();
-});
-
-// Nút xem kỉ niệm
+// Nút xem kỉ niệm + nút đóng
 const memoryBtn = document.getElementById('memoryBtn');
 const memorySection = document.getElementById('memorySection');
+const closeMemory = document.getElementById('closeMemory');
 
 memoryBtn.addEventListener('click', e => {
     e.stopPropagation();
@@ -102,7 +46,13 @@ memoryBtn.addEventListener('click', e => {
     memoryBtn.style.display = 'none';
 });
 
-// Countdown mượt với throttle
+closeMemory.addEventListener('click', e => {
+    e.stopPropagation();
+    memorySection.style.display = 'none';
+    memoryBtn.style.display = 'block';
+});
+
+// Countdown mượt
 const now = new Date();
 let target = new Date(now.getFullYear(), 1, 26, 20, 0, 0);
 if (now > target) target.setFullYear(now.getFullYear() + 1);
