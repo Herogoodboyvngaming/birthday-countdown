@@ -1,35 +1,49 @@
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; overflow: hidden; font-family: 'Segoe UI', Arial, sans-serif; }
-body { display: flex; align-items: center; justify-content: center; background: #000; touch-action: manipulation; }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-.bg {
+html, body {
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Arial', sans-serif;
+    color: #fff;
+    text-align: center;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Background ảnh bánh kem + Happy Birthday (static, no animation) */
+.background {
     position: fixed;
     inset: 0;
-    background: #000;
+    background: url('https://thumbs.dreamstime.com/b/happy-birthday-cake-candles-confetti-party-celebration-colorful-festive-greeting-card-design-bright-neon-lights-360461469.jpg') center/cover no-repeat fixed;
     z-index: -2;
 }
 
 .overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0, 0, 0, 0.5);
     z-index: -1;
-    contain: strict;
 }
 
-.main {
-    text-align: center;
+.container {
     padding: 40px;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0, 0, 0, 0.4);
     border-radius: 30px;
     backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    box-shadow: 0 15px 50px rgba(0,0,0,0.8);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8);
     max-width: 95%;
-    contain: layout style paint;
+    z-index: 2;
 }
 
-.emojis {
+.emoji-top, .emoji-bottom {
     font-size: 4.5em;
     margin: 20px 0;
 }
@@ -37,23 +51,23 @@ body { display: flex; align-items: center; justify-content: center; background: 
 h1 {
     font-size: 4em;
     color: #ffd700;
-    text-shadow: 0 0 30px #ff69b4;
+    text-shadow: 0 0 30px #ff69b4, 0 0 60px #ff1493;
     margin: 20px 0;
 }
 
-.invite {
+.subtitle {
     font-size: 2.5em;
     color: #ff69b4;
     text-shadow: 0 0 20px #ffd700;
     margin: 50px 0;
     padding: 20px 40px;
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 30px;
     display: inline-block;
     border: 3px dashed #ffd700;
 }
 
-.timer {
+.countdown {
     display: flex;
     justify-content: center;
     gap: 30px;
@@ -61,17 +75,17 @@ h1 {
     flex-wrap: wrap;
 }
 
-.box {
-    background: rgba(255,255,255,0.12);
+.time-box {
+    background: rgba(255, 255, 255, 0.12);
     padding: 30px;
     border-radius: 25px;
     min-width: 150px;
     backdrop-filter: blur(8px);
     border: 4px solid #ff69b4;
-    box-shadow: 0 8px 30px rgba(255,105,180,0.5);
+    box-shadow: 0 8px 30px rgba(255, 105, 180, 0.5);
 }
 
-.box span:first-child {
+.time-box span:first-child {
     display: block;
     font-size: 4.5em;
     font-weight: bold;
@@ -79,11 +93,10 @@ h1 {
     text-shadow: 0 0 25px #ffd700;
 }
 
-.box span:last-child {
+.time-box span:last-child {
     font-size: 1.2em;
     text-transform: uppercase;
     color: #ffd700;
-    margin-top: 10px;
     letter-spacing: 2px;
 }
 
@@ -95,47 +108,48 @@ h1 {
     border: none;
     border-radius: 50px;
     cursor: pointer;
-    box-shadow: 0 8px 30px rgba(255,105,180,0.8);
+    box-shadow: 0 8px 30px rgba(255, 105, 180, 0.8);
     transition: transform 0.3s ease;
+    margin: 40px 0;
 }
 
 #memoryBtn:hover {
     transform: translateY(-5px) scale(1.05);
 }
 
-.memory-box {
-    background: rgba(0,0,0,0.7);
+.memory-section {
+    background: rgba(0, 0, 0, 0.7);
     padding: 40px;
     border-radius: 30px;
     max-width: 800px;
     margin: 40px auto;
     border: 4px dashed #ffd700;
-    box-shadow: 0 0 50px rgba(255,215,0,0.5);
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
     display: none;
 }
 
-.memory-box h3 {
+.memory-section h3 {
     font-size: 2.5em;
     color: #ffd700;
     text-shadow: 0 0 20px #ff69b4;
     margin-bottom: 30px;
 }
 
-.memory-box p {
+.memory-section p {
     font-size: 1.8em;
     color: #fff;
     margin: 20px 0;
     line-height: 1.6;
 }
 
-.memory-content img {
+.memory-placeholder img {
     width: 100%;
     max-width: 600px;
     border-radius: 20px;
-    box-shadow: 0 0 30px rgba(255,255,255,0.4);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
 }
 
-.wish {
+.celebration {
     font-size: 5em;
     color: #ffd700;
     text-shadow: 0 0 60px #ff69b4;
@@ -143,33 +157,49 @@ h1 {
     display: none;
 }
 
-.fireworks { position: fixed; inset: 0; pointer-events: none; opacity: 0; transition: opacity 2s; contain: strict; }
-.fireworks.active { opacity: 1; }
-.fireworks img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.fireworks {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 2s;
+}
+
+.fireworks.active {
+    opacity: 1;
+}
+
+.fireworks img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
 .fly-emoji {
     position: absolute;
     font-size: 3.5em;
     pointer-events: none;
-    animation: fly 1.5s ease-out forwards;
-    z-index: 20;
-    contain: layout;
+    animation: flyUp 1.8s ease-out forwards;
+    z-index: 10;
 }
 
-@keyframes fly {
-    to { transform: translateY(-400px) scale(0.5); opacity: 0; }
+@keyframes flyUp {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-400px) scale(0.5); opacity: 0; }
 }
 
 @media (max-width: 768px) {
     h1 { font-size: 3em; }
-    .invite { font-size: 2em; padding: 15px 30px; }
-    .timer { gap: 15px; }
-    .box { padding: 25px; min-width: 120px; }
-    .box span:first-child { font-size: 3.5em; }
-    .wish { font-size: 3.8em; }
+    .subtitle { font-size: 2em; padding: 15px 30px; }
+    .countdown { gap: 15px; }
+    .time-box { padding: 25px; min-width: 120px; }
+    .time-box span:first-child { font-size: 3.5em; }
+    .celebration { font-size: 3.8em; }
     .emojis { font-size: 4em; }
     #memoryBtn { font-size: 1.8em; padding: 18px 45px; }
-    .memory-box { padding: 30px; }
-    .memory-box h3 { font-size: 2.2em; }
-    .memory-box p { font-size: 1.6em; }
+    .memory-section { padding: 30px; }
+    .memory-section h3 { font-size: 2.2em; }
+    .memory-section p { font-size: 1.6em; }
 }
