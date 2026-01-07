@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎉 Countdown Sinh Nhật Nguyễn Chí Dự 🎂</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Preload background ảnh bánh kem + Happy Birthday -->
     <link rel="preload" href="https://thumbs.dreamstime.com/b/happy-birthday-cake-candles-confetti-party-celebration-colorful-festive-greeting-card-design-bright-neon-lights-360461469.jpg" as="image">
 </head>
 <body>
@@ -34,6 +33,30 @@
 
         <button id="musicBtn">🎵 BẬT NHẠC NỀN 🎵</button>
 
+        <!-- Nút mới: Bấm vào đây để bật lyrics -->
+        <button id="lyricsBtn">📜 BẤM VÀO ĐÂY ĐỂ BẬT LYRICS</button>
+
+        <!-- Hộp lyrics (ẩn ban đầu) -->
+        <div class="lyrics-box" id="lyricsBox">
+            <h3>Lyrics - Khúc Hát Mừng Sinh Nhật (Phan Đình Tùng)</h3>
+            <div class="lyrics-content">
+                <p>Ngày hôm nay ta cùng hân hoan nơi đây</p>
+                <p>Mọi người bên nhau ta hát mừng sinh nhật</p>
+                <p>1, 2, 3 ta cùng thổi tắt nến</p>
+                <p>Happy Birthday, Happy Birthday to you</p>
+                <br>
+                <p>On this day altogether will be</p>
+                <p>And we'll all sing for your birthday</p>
+                <p>One, two, three we blow up the candles</p>
+                <p>Happy Birthday, Happy Birthday to you</p>
+                <br>
+                <p>Chúc cho bạn luôn vui tươi</p>
+                <p>Chúc cho bạn luôn thành công</p>
+                <p>Chúc cho bạn luôn hạnh phúc</p>
+                <p>Happy Birthday to you!</p>
+            </div>
+        </div>
+
         <button id="memoryBtn">❤️ XEM KỈ NIỆM ❤️</button>
 
         <div class="memory-section" id="memorySection">
@@ -57,7 +80,7 @@
         <div class="emoji-bottom">🎁🍰🎈🎊🥳🎉✨</div>
     </main>
 
-    <!-- Nhạc nền Phan Đình Tùng - official audio -->
+    <!-- Nhạc nền Phan Đình Tùng -->
     <iframe id="youtubePlayer" 
         src="https://www.youtube.com/embed/SH3U37kkuA0?autoplay=0&loop=1&playlist=SH3U37kkuA0&controls=0&modestbranding=1&rel=0&fs=0&iv_load_policy=3&disablekb=1&enablejsapi=1" 
         allow="autoplay" style="display:none;">
