@@ -1,8 +1,8 @@
-// Emoji click bay lên
+// Emoji bay khi click
 const emojis = ['🎉','🎊','🎂','🥳','🎈','🎁','🍰','✨','🎆','🎇','🎀','🍭','🎁','🥂'];
 
 document.body.addEventListener('click', e => {
-    if (e.target.id === 'memoryBtn') return;
+    if (e.target.id === 'musicBtn' || e.target.id === 'memoryBtn') return;
 
     const el = document.createElement('div');
     el.classList.add('fly-emoji');
@@ -11,6 +11,24 @@ document.body.addEventListener('click', e => {
     el.style.top = `${e.clientY}px`;
     document.body.appendChild(el);
     setTimeout(() => el.remove(), 2000);
+});
+
+// Nút bật/tắt nhạc
+const musicBtn = document.getElementById('musicBtn');
+const player = document.getElementById('youtubePlayer');
+let isPlaying = false;
+
+musicBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    if (isPlaying) {
+        player.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+        musicBtn.textContent = '🎵 BẬT NHẠC NỀN 🎵';
+        isPlaying = false;
+    } else {
+        player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+        musicBtn.textContent = '⏸ TẮT NHẠC NỀN';
+        isPlaying = true;
+    }
 });
 
 // Nút xem kỉ niệm
@@ -23,19 +41,16 @@ memoryBtn.addEventListener('click', e => {
     memoryBtn.style.display = 'none';
 });
 
-// Countdown đến đúng 20:00 ngày 26/02 (tính tuổi từ 2009)
+// Countdown đến 20:00 ngày 26/02 năm tới
 const now = new Date();
-const currentYear = now.getFullYear();
-let target = new Date(currentYear, 1, 26, 20, 0, 0); // Tháng 2 (index 1), 20h
-
+let target = new Date(now.getFullYear(), 1, 26, 20, 0, 0); // Tháng 2 (index 1)
 if (now > target) {
-    target.setFullYear(currentYear + 1);
+    target.setFullYear(now.getFullYear() + 1);
 }
 
 const countdownEl = document.getElementById('countdown');
 const celebrationEl = document.getElementById('celebration');
 const fireworksEl = document.getElementById('fireworks');
-const player = document.getElementById('youtubePlayer');
 
 function updateCountdown() {
     const diff = target - Date.now();
@@ -47,7 +62,11 @@ function updateCountdown() {
             celebrationEl.style.display = 'block';
             celebrationEl.style.opacity = '1';
             fireworksEl.classList.add('active');
-            player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+            if (!isPlaying) {
+                player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+                musicBtn.textContent = '⏸ TẮT NHẠC NỀN';
+                isPlaying = true;
+            }
         }, 1200);
         return;
     }
@@ -66,8 +85,3 @@ function updateCountdown() {
 }
 
 updateCountdown();
-
-// Bấm bất kỳ đâu lần đầu để unlock autoplay (YouTube cần tương tác)
-document.body.addEventListener('click', () => {
-    player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-}, { once: true });
