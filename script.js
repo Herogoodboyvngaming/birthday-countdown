@@ -1,20 +1,25 @@
-// Emoji bay (debounce tránh lag)
+// Emoji bay (không delay, tối ưu RAM: giới hạn 15 emoji, remove nhanh)
 const emojis = ['🎉','🎊','🎂','🥳','🎈','🎁','🍰','✨','🎆','🎇','🎀','🍭','🎁','🥂'];
-let clickTimeout = null;
+let activeEmojis = 0;
+const MAX_EMOJIS = 15;
 
 document.body.addEventListener('click', e => {
     if (e.target.id === 'musicBtn' || e.target.id === 'memoryBtn' || e.target.id === 'closeMemory') return;
 
-    clearTimeout(clickTimeout);
-    clickTimeout = setTimeout(() => {
-        const el = document.createElement('div');
-        el.classList.add('fly-emoji');
-        el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-        el.style.left = `${e.clientX}px`;
-        el.style.top = `${e.clientY}px`;
-        document.body.appendChild(el);
-        setTimeout(() => el.remove(), 2000);
-    }, 150);
+    if (activeEmojis >= MAX_EMOJIS) return;
+
+    const el = document.createElement('div');
+    el.classList.add('fly-emoji');
+    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    el.style.left = `${e.clientX}px`;
+    el.style.top = `${e.clientY}px`;
+    document.body.appendChild(el);
+    activeEmojis++;
+
+    setTimeout(() => {
+        if (el.parentNode) el.remove();
+        activeEmojis--;
+    }, 1800);
 });
 
 // Nút bật/tắt nhạc
@@ -52,25 +57,29 @@ closeMemory.addEventListener('click', e => {
     memoryBtn.style.display = 'block';
 });
 
-// Countdown mượt
+// Countdown chuẩn đến 20:00 ngày 26/02 năm tới (tính từ 2009)
 const now = new Date();
-let target = new Date(now.getFullYear(), 1, 26, 20, 0, 0);
-if (now > target) target.setFullYear(now.getFullYear() + 1);
+let nextBirthday = new Date(now.getFullYear(), 1, 26, 20, 0, 0); // Tháng 2 index 1
+
+if (now > nextBirthday) {
+    nextBirthday.setFullYear(now.getFullYear() + 1);
+}
 
 const countdownEl = document.getElementById('countdown');
 const celebrationEl = document.getElementById('celebration');
 const fireworksEl = document.getElementById('fireworks');
 
-let lastUpdate = 0;
+let lastSecond = 0;
 
-function updateCountdown(time) {
-    if (time - lastUpdate < 1000) {
+function updateCountdown() {
+    const currentSecond = Math.floor(Date.now() / 1000);
+    if (currentSecond === lastSecond) {
         requestAnimationFrame(updateCountdown);
         return;
     }
-    lastUpdate = time;
+    lastSecond = currentSecond;
 
-    const diff = target - Date.now();
+    const diff = nextBirthday - Date.now();
 
     if (diff <= 0) {
         countdownEl.style.opacity = '0';
@@ -88,10 +97,10 @@ function updateCountdown(time) {
         return;
     }
 
-    const days = Math.floor(diff / 86400000);
-    const hours = Math.floor((diff % 86400000) / 3600000);
-    const minutes = Math.floor((diff % 3600000) / 60000);
-    const seconds = Math.floor((diff % 60000) / 1000);
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
     document.getElementById('days').textContent = days.toString().padStart(2, '0');
     document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
