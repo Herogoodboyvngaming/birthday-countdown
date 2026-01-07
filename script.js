@@ -1,16 +1,20 @@
-// Emoji bay khi click
+// Emoji bay (debounce để tránh lag khi click nhanh)
 const emojis = ['🎉','🎊','🎂','🥳','🎈','🎁','🍰','✨','🎆','🎇','🎀','🍭','🎁','🥂'];
+let clickTimeout = null;
 
 document.body.addEventListener('click', e => {
-    if (e.target.id === 'musicBtn' || e.target.id === 'memoryBtn' || e.target.id === 'lyricsBtn') return;
+    if (e.target.id === 'musicBtn' || e.target.id === 'lyricsBtn' || e.target.id === 'memoryBtn') return;
 
-    const el = document.createElement('div');
-    el.classList.add('fly-emoji');
-    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-    el.style.left = `${e.clientX}px`;
-    el.style.top = `${e.clientY}px`;
-    document.body.appendChild(el);
-    setTimeout(() => el.remove(), 2000);
+    clearTimeout(clickTimeout);
+    clickTimeout = setTimeout(() => {
+        const el = document.createElement('div');
+        el.classList.add('fly-emoji');
+        el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        el.style.left = `${e.clientX}px`;
+        el.style.top = `${e.clientY}px`;
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 2000);
+    }, 150);
 });
 
 // Nút bật/tắt nhạc
@@ -31,14 +35,61 @@ musicBtn.addEventListener('click', e => {
     }
 });
 
-// Nút bật lyrics
+// Nút bật lyrics karaoke
 const lyricsBtn = document.getElementById('lyricsBtn');
-const lyricsBox = document.getElementById('lyricsBox');
+const karaokeBox = document.getElementById('karaokeBox');
+const lyricsLines = document.getElementById('lyricsLines');
 
 lyricsBtn.addEventListener('click', e => {
     e.stopPropagation();
-    lyricsBox.style.display = 'block';
+    karaokeBox.style.display = 'block';
     lyricsBtn.style.display = 'none';
+});
+
+// Lyrics data
+const lyricsData = [
+    { text: "Ngày hôm nay ta cùng hân hoan nơi đây" },
+    { text: "Mọi người bên nhau ta hát mừng sinh nhật" },
+    { text: "1, 2, 3 ta cùng thổi tắt nến" },
+    { text: "Happy Birthday, Happy Birthday to you" },
+    { text: "On this day altogether will be" },
+    { text: "And we'll all sing for your birthday" },
+    { text: "One, two, three we blow up the candles" },
+    { text: "Happy Birthday, Happy Birthday to you" },
+    { text: "Chúc cho bạn luôn vui tươi" },
+    { text: "Chúc cho bạn luôn thành công" },
+    { text: "Chúc cho bạn luôn hạnh phúc" },
+    { text: "Happy Birthday to you!" }
+];
+
+lyricsData.forEach(line => {
+    const p = document.createElement('p');
+    p.textContent = line.text;
+    lyricsLines.appendChild(p);
+});
+
+// Simple karaoke highlight (mỗi dòng 5s)
+let currentLine = 0;
+let karaokeInterval;
+
+function startKaraoke() {
+    currentLine = 0;
+    const lines = lyricsLines.querySelectorAll('p');
+    lines.forEach(p => p.classList.remove('active'));
+
+    karaokeInterval = setInterval(() => {
+        if (currentLine > 0) lines[currentLine - 1].classList.remove('active');
+        if (currentLine < lines.length) {
+            lines[currentLine].classList.add('active');
+            currentLine++;
+        } else {
+            clearInterval(karaokeInterval);
+        }
+    }, 5000);
+}
+
+musicBtn.addEventListener('click', () => {
+    if (isPlaying && karaokeBox.style.display === 'block') startKaraoke();
 });
 
 // Nút xem kỉ niệm
@@ -51,18 +102,24 @@ memoryBtn.addEventListener('click', e => {
     memoryBtn.style.display = 'none';
 });
 
-// Countdown đến 20:00 ngày 26/02 năm tới
+// Countdown mượt với throttle
 const now = new Date();
-let target = new Date(now.getFullYear(), 1, 26, 20, 0, 0); // Tháng 2 (index 1)
-if (now > target) {
-    target.setFullYear(now.getFullYear() + 1);
-}
+let target = new Date(now.getFullYear(), 1, 26, 20, 0, 0);
+if (now > target) target.setFullYear(now.getFullYear() + 1);
 
 const countdownEl = document.getElementById('countdown');
 const celebrationEl = document.getElementById('celebration');
 const fireworksEl = document.getElementById('fireworks');
 
-function updateCountdown() {
+let lastUpdate = 0;
+
+function updateCountdown(time) {
+    if (time - lastUpdate < 1000) {
+        requestAnimationFrame(updateCountdown);
+        return;
+    }
+    lastUpdate = time;
+
     const diff = target - Date.now();
 
     if (diff <= 0) {
@@ -81,10 +138,10 @@ function updateCountdown() {
         return;
     }
 
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const minutes = Math.floor((diff % 3600000) / 60000);
+    const seconds = Math.floor((diff % 60000) / 1000);
 
     document.getElementById('days').textContent = days.toString().padStart(2, '0');
     document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
@@ -94,4 +151,4 @@ function updateCountdown() {
     requestAnimationFrame(updateCountdown);
 }
 
-updateCountdown();
+requestAnimationFrame(updateCountdown);
