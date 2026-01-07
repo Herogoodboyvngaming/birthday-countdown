@@ -2,7 +2,7 @@
 const emojis = ['🎉','🎊','🎂','🥳','🎈','🎁','🍰','✨','🎆','🎇','🎀','🍭','🎁','🥂'];
 
 document.body.addEventListener('click', e => {
-    if (e.target.id === 'musicBtn' || e.target.id === 'memoryBtn') return;
+    if (e.target.id === 'musicBtn' || e.target.id === 'memoryBtn' || e.target.id === 'lyricsBtn') return;
 
     const el = document.createElement('div');
     el.classList.add('fly-emoji');
@@ -29,6 +29,16 @@ musicBtn.addEventListener('click', e => {
         musicBtn.textContent = '⏸ TẮT NHẠC NỀN';
         isPlaying = true;
     }
+});
+
+// Nút bật lyrics
+const lyricsBtn = document.getElementById('lyricsBtn');
+const lyricsBox = document.getElementById('lyricsBox');
+
+lyricsBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    lyricsBox.style.display = 'block';
+    lyricsBtn.style.display = 'none';
 });
 
 // Nút xem kỉ niệm
