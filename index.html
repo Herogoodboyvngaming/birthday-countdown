@@ -2,48 +2,49 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎉 Countdown Sinh Nhật Nguyễn Chí Dự 🎂</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Preload background ảnh bánh kem + Happy Birthday -->
+    <link rel="preload" href="https://thumbs.dreamstime.com/b/happy-birthday-cake-candles-confetti-party-celebration-colorful-festive-greeting-card-design-bright-neon-lights-360461469.jpg" as="image">
 </head>
 <body>
-    <div class="bg"></div>
+    <div class="background"></div>
     <div class="overlay"></div>
 
     <div class="fireworks" id="fireworks">
-        <img src="https://i.pinimg.com/originals/76/b5/82/76b58298e9cee7c935f9ec9ba1433508.gif">
-        <img src="https://i.pinimg.com/originals/7a/f2/ef/7af2ef0b0b2294982218b48d4a1f488b.gif">
-        <img src="https://media.tenor.com/ZYSYsmBaqHMAAAAM/fireworks-firework.gif">
-        <img src="https://i.gifer.com/7J8Z.gif">
+        <img src="https://i.pinimg.com/originals/76/b5/82/76b58298e9cee7c935f9ec9ba1433508.gif" alt="Pháo hoa">
+        <img src="https://i.pinimg.com/originals/7a/f2/ef/7af2ef0b0b2294982218b48d4a1f488b.gif" alt="Pháo hoa">
+        <img src="https://media.tenor.com/ZYSYsmBaqHMAAAAM/fireworks-firework.gif" alt="Pháo hoa">
+        <img src="https://i.gifer.com/7J8Z.gif" alt="Pháo hoa">
     </div>
 
-    <main class="main">
-        <div class="emojis top">🎉🥳🎂🎊🎆🎈✨</div>
+    <main class="container">
+        <div class="emoji-top">🎉🥳🎂🎊🎆🎈✨</div>
         <h1>COUNTDOWN TỚI SINH NHẬT<br>NGUYỄN CHÍ DỰ</h1>
         
-        <p class="invite">🎈 CÙNG ĐỢI TỚI NGÀY SINH NHẬT TUI NHÉ MỌI NGƯỜI 🎈</p>
+        <p class="subtitle">🎈 CÙNG ĐỢI TỚI NGÀY SINH NHẬT TUI NHÉ MỌI NGƯỜI 🎈</p>
         
-        <div class="timer" id="timer">
-            <div class="box"><span id="days">00</span><span>Ngày</span></div>
-            <div class="box"><span id="hours">00</span><span>Giờ</span></div>
-            <div class="box"><span id="minutes">00</span><span>Phút</span></div>
-            <div class="box"><span id="seconds">00</span><span>Giây</span></div>
+        <div class="countdown" id="countdown">
+            <div class="time-box"><span id="days">00</span><span>Ngày</span></div>
+            <div class="time-box"><span id="hours">00</span><span>Giờ</span></div>
+            <div class="time-box"><span id="minutes">00</span><span>Phút</span></div>
+            <div class="time-box"><span id="seconds">00</span><span>Giây</span></div>
         </div>
 
         <button id="memoryBtn">❤️ XEM KỈ NIỆM ❤️</button>
 
-        <div class="memory-box" id="memoryBox">
+        <div class="memory-section" id="memorySection">
             <h3>Những kỉ niệm của Nguyễn Chí Dự</h3>
             <p>Bây giờ chưa có kỉ niệm gì huhu 😭</p>
             <p>Các bạn hãy đợi năm sau nhé, mình sẽ cố gắng thu thập nhiều kỉ niệm nhất có thể!</p>
-            <p>Mong các bạn tha lỗi cho mình nha 🥹</p>
-            <div class="memory-content">
-                <img src="https://via.placeholder.com/600x400?text=Coming+Soon+Next+Year" alt="Kỉ niệm sắp có">
-                <p>(Ảnh/video kỉ niệm sẽ được thêm vào năm sau ❤️)</p>
+            <p>Mong các bạn tha lỗi cho mình nha 🥹❤️</p>
+            <div class="memory-placeholder">
+                <img src="https://via.placeholder.com/800x500?text=Coming+Soon+-+Kỉ+Niệm+Năm+Sau" alt="Kỉ niệm sắp có">
             </div>
         </div>
 
-        <div class="wish" id="wish">
+        <div class="celebration" id="celebration">
             🎉🎊🥳🎆🎂🎈✨<br>
             CHÚC MỪNG SINH NHẬT<br>
             NGUYỄN CHÍ DỰ!<br><br>
@@ -51,89 +52,15 @@
             CHÚC MỪNG BẠN!!! 🎇🥂🎉
         </div>
 
-        <div class="emojis bottom">🎁🍰🎈🎊🥳🎉✨</div>
+        <div class="emoji-bottom">🎁🍰🎈🎊🥳🎉✨</div>
     </main>
 
-    <script>
-        // Tối ưu emoji click: debounce và limit số lượng
-        const emojis = ['🎉','🎊','🎂','🥳','🎈','🎁','🍰','✨','🎆','🎇','🎀','🍭','🎁','🥂'];
-        let clickTimeout;
+    <!-- Nhạc nền "Khúc Hát Mừng Sinh Nhật" Phan Đình Tùng (official audio) -->
+    <iframe id="youtubePlayer" 
+        src="https://www.youtube.com/embed/SH3U37kkuA0?autoplay=0&loop=1&playlist=SH3U37kkuA0&controls=0&modestbranding=1&rel=0&fs=0&iv_load_policy=3&disablekb=1&enablejsapi=1" 
+        allow="autoplay" style="display:none;">
+    </iframe>
 
-        document.body.addEventListener('click', e => {
-            if (e.target.id === 'memoryBtn') return;
-
-            clearTimeout(clickTimeout);
-            clickTimeout = setTimeout(() => {
-                const el = document.createElement('div');
-                el.classList.add('fly-emoji');
-                el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-                el.style.left = `${e.clientX}px`;
-                el.style.top = `${e.clientY}px`;
-                document.body.appendChild(el);
-                setTimeout(() => el.remove(), 2000);
-            }, 100); // debounce 100ms để tránh spam emoji gây lag
-        });
-
-        const memoryBtn = document.getElementById('memoryBtn');
-        const memoryBox = document.getElementById('memoryBox');
-
-        memoryBtn.addEventListener('click', e => {
-            e.stopPropagation();
-            memoryBox.style.display = 'block';
-            memoryBtn.style.display = 'none';
-        });
-
-        // Countdown siêu mượt với requestAnimationFrame
-        const target = new Date();
-        const now = new Date();
-        if (now.getMonth() > 1 || (now.getMonth() === 1 && (now.getDate() > 26 || (now.getDate() === 26 && now.getHours() >= 20)))) {
-            target.setFullYear(now.getFullYear() + 1);
-        } else {
-            target.setFullYear(now.getFullYear());
-        }
-        target.setMonth(1);
-        target.setDate(26);
-        target.setHours(20, 0, 0, 0);
-
-        const timerEl = document.getElementById('timer');
-        const wishEl = document.getElementById('wish');
-        const fireworksEl = document.getElementById('fireworks');
-
-        let lastTime = 0;
-
-        function tick(time) {
-            if (!lastTime) lastTime = time;
-            if (time - lastTime < 1000) { // update mỗi giây để tránh over-update
-                requestAnimationFrame(tick);
-                return;
-            }
-            lastTime = time;
-
-            const diff = target - Date.now();
-            if (diff <= 0) {
-                timerEl.style.opacity = '0';
-                setTimeout(() => {
-                    timerEl.style.display = 'none';
-                    wishEl.style.display = 'block';
-                    wishEl.style.opacity = '1';
-                    fireworksEl.classList.add('active');
-                }, 1200);
-                return;
-            }
-
-            const d = Math.floor(diff / 86400000);
-            const h = Math.floor((diff % 86400000) / 3600000);
-            const m = Math.floor((diff % 3600000) / 60000);
-            const s = Math.floor((diff % 60000) / 1000);
-
-            document.getElementById('days').textContent = d.toString().padStart(2, '0');
-            document.getElementById('hours').textContent = h.toString().padStart(2, '0');
-            document.getElementById('minutes').textContent = m.toString().padStart(2, '0');
-            document.getElementById('seconds').textContent = s.toString().padStart(2, '0');
-
-            requestAnimationFrame(tick);
-        }
-        requestAnimationFrame(tick);
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
