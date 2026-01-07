@@ -5,18 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎉 Countdown Sinh Nhật Nguyễn Chí Dự 🎂</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Preload background bánh kem neon -->
+    <!-- Preload background nhẹ -->
     <link rel="preload" href="https://thumbs.dreamstime.com/b/happy-birthday-cake-candles-confetti-party-celebration-colorful-festive-greeting-card-design-bright-neon-lights-360461469.jpg" as="image">
 </head>
 <body>
     <div class="background"></div>
     <div class="overlay"></div>
 
+    <!-- Pháo hoa chỉ hiện khi đến giờ (loading lazy để tiết kiệm RAM) -->
     <div class="fireworks" id="fireworks">
-        <img src="https://i.pinimg.com/originals/76/b5/82/76b58298e9cee7c935f9ec9ba1433508.gif" alt="Pháo hoa">
-        <img src="https://i.pinimg.com/originals/7a/f2/ef/7af2ef0b0b2294982218b48d4a1f488b.gif" alt="Pháo hoa">
-        <img src="https://media.tenor.com/ZYSYsmBaqHMAAAAM/fireworks-firework.gif" alt="Pháo hoa">
-        <img src="https://i.gifer.com/7J8Z.gif" alt="Pháo hoa">
+        <img src="https://i.pinimg.com/originals/76/b5/82/76b58298e9cee7c935f9ec9ba1433508.gif" loading="lazy">
+        <img src="https://i.pinimg.com/originals/7a/f2/ef/7af2ef0b0b2294982218b48d4a1f488b.gif" loading="lazy">
+        <img src="https://media.tenor.com/ZYSYsmBaqHMAAAAM/fireworks-firework.gif" loading="lazy">
+        <img src="https://i.gifer.com/7J8Z.gif" loading="lazy">
     </div>
 
     <main class="container">
@@ -36,7 +37,6 @@
 
         <button id="memoryBtn">❤️ XEM KỈ NIỆM ❤️</button>
 
-        <!-- Hộp kỉ niệm với nút đóng và ảnh Coming Soon thật -->
         <div class="memory-section" id="memorySection">
             <button class="close-btn" id="closeMemory">✖ ĐÓNG</button>
             <h3>Những kỉ niệm của Nguyễn Chí Dự</h3>
@@ -44,7 +44,7 @@
             <p>Các bạn hãy đợi năm sau nhé, mình sẽ cố gắng thu thập nhiều kỉ niệm nhất có thể!</p>
             <p>Mong các bạn tha lỗi cho mình nha 🥹❤️</p>
             <div class="memory-placeholder">
-                <img src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Kỉ niệm sắp có">
+                <img src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1470&q=80" loading="lazy" alt="Kỉ niệm sắp có">
                 <p>(Ảnh/video kỉ niệm sẽ được thêm vào năm sau ❤️)</p>
             </div>
         </div>
