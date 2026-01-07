@@ -10,7 +10,6 @@ html, body {
     font-family: 'Segoe UI', Arial, sans-serif;
     color: #fff;
     text-align: center;
-    touch-action: manipulation;
 }
 
 body {
@@ -19,7 +18,7 @@ body {
     justify-content: center;
 }
 
-/* Background bánh kem neon (static) */
+/* Background bánh kem neon (static, nhẹ) */
 .background {
     position: fixed;
     inset: 0;
@@ -32,7 +31,6 @@ body {
     inset: 0;
     background: rgba(0, 0, 0, 0.45);
     z-index: -1;
-    contain: strict;
 }
 
 .container {
@@ -44,7 +42,6 @@ body {
     box-shadow: 0 15px 50px rgba(0, 0, 0, 0.7);
     max-width: 95%;
     z-index: 2;
-    contain: layout style paint;
 }
 
 .emoji-top, .emoji-bottom {
@@ -52,7 +49,7 @@ body {
     margin: 20px 0;
 }
 
-/* Viền rainbow chạy mượt quanh tiêu đề */
+/* Viền rainbow chạy mượt */
 h1.rainbow-border {
     font-size: 4em;
     color: #ffd700;
@@ -116,7 +113,7 @@ h1.rainbow-border {
     letter-spacing: 2px;
 }
 
-/* Nút chung */
+/* Nút */
 #musicBtn, #memoryBtn {
     padding: 20px 60px;
     font-size: 2em;
@@ -204,7 +201,6 @@ h1.rainbow-border {
     pointer-events: none;
     opacity: 0;
     transition: opacity 2s;
-    contain: strict;
 }
 
 .fireworks.active {
@@ -225,7 +221,6 @@ h1.rainbow-border {
     pointer-events: none;
     animation: flyUp 1.8s ease-out forwards;
     z-index: 10;
-    contain: layout;
 }
 
 @keyframes flyUp {
