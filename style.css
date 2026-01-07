@@ -18,7 +18,7 @@ body {
     justify-content: center;
 }
 
-/* Background ảnh bánh kem + Happy Birthday (static, no animation) */
+/* Background ảnh bánh kem + Happy Birthday (static) */
 .background {
     position: fixed;
     inset: 0;
@@ -100,6 +100,25 @@ h1 {
     letter-spacing: 2px;
 }
 
+/* Nút nhạc */
+#musicBtn {
+    padding: 20px 60px;
+    font-size: 2em;
+    background: linear-gradient(45deg, #ff69b4, #ff1493);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 8px 30px rgba(255, 105, 180, 0.8);
+    transition: transform 0.3s ease;
+    margin: 30px 0;
+}
+
+#musicBtn:hover {
+    transform: translateY(-5px) scale(1.05);
+}
+
+/* Nút kỉ niệm */
 #memoryBtn {
     padding: 20px 60px;
     font-size: 2em;
@@ -110,7 +129,7 @@ h1 {
     cursor: pointer;
     box-shadow: 0 8px 30px rgba(255, 105, 180, 0.8);
     transition: transform 0.3s ease;
-    margin: 40px 0;
+    margin: 30px 0;
 }
 
 #memoryBtn:hover {
@@ -198,7 +217,7 @@ h1 {
     .time-box span:first-child { font-size: 3.5em; }
     .celebration { font-size: 3.8em; }
     .emojis { font-size: 4em; }
-    #memoryBtn { font-size: 1.8em; padding: 18px 45px; }
+    #musicBtn, #memoryBtn { font-size: 1.8em; padding: 18px 45px; }
     .memory-section { padding: 30px; }
     .memory-section h3 { font-size: 2.2em; }
     .memory-section p { font-size: 1.6em; }
