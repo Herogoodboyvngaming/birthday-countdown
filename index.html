@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎉 Countdown Sinh Nhật Nguyễn Chí Dự 🎂</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Preload background bánh kem neon đẹp, high resolution, static -->
     <link rel="preload" href="https://thumbs.dreamstime.com/b/happy-birthday-cake-candles-confetti-party-celebration-colorful-festive-greeting-card-design-bright-neon-lights-360461469.jpg" as="image">
 </head>
 <body>
@@ -20,7 +21,7 @@
 
     <main class="container">
         <div class="emoji-top">🎉🥳🎂🎊🎆🎈✨</div>
-        <h1>COUNTDOWN TỚI SINH NHẬT<br>NGUYỄN CHÍ DỰ</h1>
+        <h1 class="rainbow-text">COUNTDOWN TỚI SINH NHẬT<br>NGUYỄN CHÍ DỰ</h1>
         
         <p class="subtitle">🎈 CÙNG ĐỢI TỚI NGÀY SINH NHẬT TUI NHÉ MỌI NGƯỜI 🎈</p>
         
@@ -33,28 +34,11 @@
 
         <button id="musicBtn">🎵 BẬT NHẠC NỀN 🎵</button>
 
-        <!-- Nút mới: Bấm vào đây để bật lyrics -->
         <button id="lyricsBtn">📜 BẤM VÀO ĐÂY ĐỂ BẬT LYRICS</button>
 
-        <!-- Hộp lyrics (ẩn ban đầu) -->
-        <div class="lyrics-box" id="lyricsBox">
-            <h3>Lyrics - Khúc Hát Mừng Sinh Nhật (Phan Đình Tùng)</h3>
-            <div class="lyrics-content">
-                <p>Ngày hôm nay ta cùng hân hoan nơi đây</p>
-                <p>Mọi người bên nhau ta hát mừng sinh nhật</p>
-                <p>1, 2, 3 ta cùng thổi tắt nến</p>
-                <p>Happy Birthday, Happy Birthday to you</p>
-                <br>
-                <p>On this day altogether will be</p>
-                <p>And we'll all sing for your birthday</p>
-                <p>One, two, three we blow up the candles</p>
-                <p>Happy Birthday, Happy Birthday to you</p>
-                <br>
-                <p>Chúc cho bạn luôn vui tươi</p>
-                <p>Chúc cho bạn luôn thành công</p>
-                <p>Chúc cho bạn luôn hạnh phúc</p>
-                <p>Happy Birthday to you!</p>
-            </div>
+        <div class="karaoke-box" id="karaokeBox">
+            <h3>Karaoke - Khúc Hát Mừng Sinh Nhật (Phan Đình Tùng)</h3>
+            <div id="lyricsLines" class="lyrics-lines"></div>
         </div>
 
         <button id="memoryBtn">❤️ XEM KỈ NIỆM ❤️</button>
