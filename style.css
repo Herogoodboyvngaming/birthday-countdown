@@ -7,9 +7,10 @@
 html, body {
     height: 100%;
     overflow: hidden;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Segoe UI', Arial, sans-serif;
     color: #fff;
     text-align: center;
+    touch-action: manipulation; /* Tối ưu touch mobile */
 }
 
 body {
@@ -18,29 +19,33 @@ body {
     justify-content: center;
 }
 
-/* Background bánh kem + Happy Birthday neon (static) */
+/* Background bánh kem neon (static, đẹp full) */
 .background {
     position: fixed;
     inset: 0;
     background: url('https://thumbs.dreamstime.com/b/happy-birthday-cake-candles-confetti-party-celebration-colorful-festive-greeting-card-design-bright-neon-lights-360461469.jpg') center/cover no-repeat fixed;
     z-index: -2;
+    will-change: auto;
 }
 
 .overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.45);
     z-index: -1;
+    contain: strict;
 }
 
 .container {
     padding: 40px;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.35);
     border-radius: 30px;
     backdrop-filter: blur(15px);
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.7);
     max-width: 95%;
     z-index: 2;
+    contain: layout style paint;
 }
 
 .emoji-top, .emoji-bottom {
@@ -48,11 +53,21 @@ body {
     margin: 20px 0;
 }
 
-h1 {
+/* Rainbow text glow animation chạy trên tiêu đề */
+h1.rainbow-text {
     font-size: 4em;
-    color: #ffd700;
-    text-shadow: 0 0 30px #ff69b4, 0 0 60px #ff1493;
-    margin: 20px 0;
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #ff00c8, #ff0000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 400% 400%;
+    animation: rainbowGlow 8s linear infinite;
+}
+
+@keyframes rainbowGlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .subtitle {
@@ -100,7 +115,7 @@ h1 {
     letter-spacing: 2px;
 }
 
-/* Nút nhạc và lyrics */
+/* Nút chung */
 #musicBtn, #lyricsBtn, #memoryBtn {
     padding: 20px 60px;
     font-size: 2em;
@@ -111,15 +126,15 @@ h1 {
     cursor: pointer;
     box-shadow: 0 8px 30px rgba(255, 105, 180, 0.8);
     transition: transform 0.3s ease;
-    margin: 20px 0;
+    margin: 30px 0;
 }
 
 #musicBtn:hover, #lyricsBtn:hover, #memoryBtn:hover {
     transform: translateY(-5px) scale(1.05);
 }
 
-/* Hộp lyrics */
-.lyrics-box {
+/* Karaoke box */
+.karaoke-box {
     background: rgba(0, 0, 0, 0.7);
     padding: 40px;
     border-radius: 30px;
@@ -130,21 +145,28 @@ h1 {
     display: none;
 }
 
-.lyrics-box h3 {
+.karaoke-box h3 {
     font-size: 2.5em;
     color: #ffd700;
     text-shadow: 0 0 20px #ff69b4;
     margin-bottom: 30px;
 }
 
-.lyrics-content p {
-    font-size: 1.8em;
-    color: #fff;
-    margin: 15px 0;
+.lyrics-lines p {
+    font-size: 2.2em;
+    color: #ffd700;
+    margin: 20px 0;
     line-height: 1.6;
+    transition: all 0.6s ease;
 }
 
-/* Hộp kỉ niệm giữ nguyên */
+.lyrics-lines p.active {
+    color: #ffff00;
+    text-shadow: 0 0 50px #ff1493, 0 0 100px #ff69b4;
+    transform: scale(1.15);
+}
+
+/* Memory section */
 .memory-section {
     background: rgba(0, 0, 0, 0.7);
     padding: 40px;
@@ -177,6 +199,7 @@ h1 {
     box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
 }
 
+/* Celebration */
 .celebration {
     font-size: 5em;
     color: #ffd700;
@@ -185,12 +208,14 @@ h1 {
     display: none;
 }
 
+/* Pháo hoa */
 .fireworks {
     position: fixed;
     inset: 0;
     pointer-events: none;
     opacity: 0;
     transition: opacity 2s;
+    contain: strict;
 }
 
 .fireworks.active {
@@ -205,12 +230,14 @@ h1 {
     object-fit: cover;
 }
 
+/* Emoji bay */
 .fly-emoji {
     position: absolute;
     font-size: 3.5em;
     pointer-events: none;
     animation: flyUp 1.8s ease-out forwards;
     z-index: 10;
+    contain: layout;
 }
 
 @keyframes flyUp {
@@ -218,16 +245,18 @@ h1 {
     100% { transform: translateY(-400px) scale(0.5); opacity: 0; }
 }
 
+/* Responsive tối ưu mobile */
 @media (max-width: 768px) {
-    h1 { font-size: 3em; }
+    .container { padding: 30px; }
+    h1.rainbow-text { font-size: 3em; }
     .subtitle { font-size: 2em; padding: 15px 30px; }
     .countdown { gap: 15px; }
     .time-box { padding: 25px; min-width: 120px; }
     .time-box span:first-child { font-size: 3.5em; }
     .celebration { font-size: 3.8em; }
-    .emojis { font-size: 4em; }
+    .emoji-top, .emoji-bottom { font-size: 4em; }
     #musicBtn, #lyricsBtn, #memoryBtn { font-size: 1.8em; padding: 18px 45px; }
-    .memory-section, .lyrics-box { padding: 30px; }
-    .memory-section h3, .lyrics-box h3 { font-size: 2.2em; }
-    .memory-section p, .lyrics-content p { font-size: 1.6em; }
+    .karaoke-box, .memory-section { padding: 30px; }
+    .karaoke-box h3, .memory-section h3 { font-size: 2.2em; }
+    .lyrics-lines p, .memory-section p { font-size: 1.6em; }
 }
